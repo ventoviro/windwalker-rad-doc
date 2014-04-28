@@ -22,4 +22,8 @@
     * [CurlHelper](helpers/curl.md)
     * [DateHelper](helpers/date.md)
     * [HtmlHelper](helpers/html.md)
+    * [LanguageHelper](helpers/language.md)
+    * [ReflectionHelper](helpers/reflection.md)
+    * [XmlHelper](helpers/xml.md)
+    * [PathHelper](helpers/path.md)
 

@@ -1,6 +1,6 @@
-![windwalker-logo-500-2](https://f.cloud.github.com/assets/1639206/2192348/7c01df60-9865-11e3-941c-01b0983adebd.png)
+# Windwalker RAD Framework
 
-## Introduction
+![windwalker-logo](https://cloud.githubusercontent.com/assets/1639206/2814728/b8419496-ceae-11e3-911b-5743b474ed5d.png)
 
 **Windwalker** is a RAD framework of Joomla! CMS.
 

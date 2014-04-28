@@ -13,4 +13,9 @@
 * [General](general/asset.md)
     * [Asset](general/asset.md)
     * [Config](general/config.md)
-    * [Profiler](general/profiler.md)
+* Helpers
+    * [ProfilerHelper](general/profiler.md)
+    * [ModalHelper](general/modal.md)
+    * [JContentHelper](helpers/jcontent.md)
+    * [ExtensionHelper](helpers/extension.md)
+

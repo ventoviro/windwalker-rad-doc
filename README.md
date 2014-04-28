@@ -1,111 +1,49 @@
-# Getting Started
+![windwalker-logo-500-2](https://f.cloud.github.com/assets/1639206/2192348/7c01df60-9865-11e3-941c-01b0983adebd.png)
 
-## Installation via Composer
+## Introduction
 
-We use composer to install Windwalker RAD.
+**Windwalker** is a RAD framework of Joomla! CMS.
+
+We provides modern functions and interfaces help developer quickly create extensions.
+Windwalker contains single action controller(Joomla new MVC), XUL engine, console interface, Dependency Injection,
+DataMapper and code generator.
+
+Hope our framework bring you a joy time :)
+
+### Version 1 and 2
+
+This is the version 2 repository, all folder with lower case is legacy code, all folders with capitals is for version 2 and follows PSR-0 naming standard.
+
+The version 2 is still work in process.
+
+## Installation Via Composer
 
 ``` bash
 cd /your/joomla/dir
 composer create-project windwalker/joomla-rad libraries/windwalker dev-staging -s dev
 ```
 
-## Setting PHP CLI
-
-Windwalker generator need PHP CLI, that you can use command line to operate it. If you are in Windows, please make sure
- the Environment Variable of `php.exe` has set.
-
-## Generator Commands
-
-Now, chdir to your Joomla path, type:
+## Generate a new extension
 
 ``` bash
-$ php bin/windwalker generator
+php bin/windwalker generator init com_flower sakura.sakuras -c admin
 ```
 
-And you will see:
+## About
+Author
+:   [Simon Asika](mailto://asika@asikart.com)
 
-```
-Windwalker Console - version: 2.0
-------------------------------------------------------------
+Joomla!CMS version
+:   3.2 and newer
 
-[generator Help]
+First release
+:   2012-05-05
 
-Extension generator.
+## All extensions created by Windwalker
 
-Usage:
-  generator <command> [option]
-
-
-Options:
-
-  -c | --client     Site or administrator (admin)
-  -t | --tmpl       Using template.
-  -h | --help       Display this help message.
-  -q | --quiet      Do not output any message.
-  -v | --verbose    Increase the verbosity of messages.
-  --no-ansi         Suppress ANSI colors on unsupported terminals.
-
-Available commands:
-
-  add        Add new controller view model system classes(only component).
-
-    item       Add a singular MVC group for item CRUD.
-
-    list       Add a plural controller to show list page.
-
-    subsystem  Sub system contains item and list two controller to support CRUD a table.
-
-
-  convert    Convert an extension back to a template.
-
-  init       Init a new extension.
-```
-
-### Generate Extensions
-
-Here is some example of how to generate extensions:
-
-#### Init Component
-
-Create a component named `com_flower` and with two MVCs `sakura` and `sakuras` in both site and admin.
-
-``` bash
-$ php bin/windwalker generator init com_flower sakura.sakuras
-```
-
-Create a component in site or admin.
-
-``` bash
-$ php bin/windwalker generator init com_flower sakura.sakuras -c admin (site)
-```
-
-Create a component and use other sub template `foo`, default is `default`.
-
-``` bash
-$ php bin/windwalker generator init com_flower sakura.sakuras -t foo
-```
-
-#### Add two MVC groups
-
-Add a singular and a plural MVC group to a exists component.
-
-``` bash
-$ php bin/windwalker generator add subsystem com_flower rose.roses
-```
-
-#### Module
-
-Create a module named `mod_flower` in front end.
-
-``` bash
-$ php bin/windwalker generator init mod_flower -c site
-```
-
-#### Plugin
-
-Create a module named `plg_flower` in 'system' group.
-
-``` bash
-$ php bin/windwalker generator init plg_system_flower
-```
+- Asikart Quickicons: https://github.com/asikart/quickicons
+- Asikart Quickcontent: https://github.com/asikart/quickcontent
+- Remote and Local Image Manager: https://github.com/asikart/remoteimage
+- ACE x Markdown Editor: https://github.com/asikart/ace-markdown-editor
+- Asikart UserXTD: https://github.com/asikart/userxtd
 

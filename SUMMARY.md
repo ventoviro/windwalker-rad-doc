@@ -18,4 +18,5 @@
     * [ModalHelper](general/modal.md)
     * [JContentHelper](helpers/jcontent.md)
     * [ExtensionHelper](helpers/extension.md)
+    * [UriHelper](helpers/uri.md)
 

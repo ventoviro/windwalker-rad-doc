@@ -20,4 +20,6 @@
     * [ExtensionHelper](helpers/extension.md)
     * [UriHelper](helpers/uri.md)
     * [CurlHelper](helpers/curl.md)
+    * [DateHelper](helpers/date.md)
+    * [HtmlHelper](helpers/html.md)
 

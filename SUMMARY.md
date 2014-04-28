@@ -16,7 +16,7 @@
     * [Batch](admin/batch.md)
     * [ModelAdmin](admin/model-admin.md)
     * [FormField](admin/formfield.md)
-* [Helpers](general/profiler.md)
+* Helpers
     * [ProfilerHelper](general/profiler.md)
     * [ModalHelper](general/modal.md)
     * [JContentHelper](helpers/jcontent.md)
@@ -29,4 +29,9 @@
     * [ReflectionHelper](helpers/reflection.md)
     * [XmlHelper](helpers/xml.md)
     * [PathHelper](helpers/path.md)
+* [Framework Package](framework/framework.md)
+    * [Data](framework/data.md)
+    * [DataMapper](framework/datamapper.md)
+    * [Compare](framework/windwalker-compare.md)
+    * [Middleware](framework/middleware.md)
 

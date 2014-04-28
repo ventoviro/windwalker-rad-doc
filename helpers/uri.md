@@ -14,7 +14,7 @@ And using this to decode:
 echo \Windwalker\Helper\Uri::base64('decode', $url);
 ```
 
-The `encode` action is same as `base64_encode()` function. But the `decode()` will make the url safe and replace `' '` to `'+'`.
+> The `encode` action is same as `base64_encode()` function. But the `decode()` will make the url safe and replace `' '` to `'+'` to avoid decode error.
 
 ## Download and Stream
 

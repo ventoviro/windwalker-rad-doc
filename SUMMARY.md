@@ -16,7 +16,7 @@
     * [Batch](admin/batch.md)
     * [ModelAdmin](admin/model-admin.md)
     * [FormField](admin/formfield.md)
-* Helpers
+* [Helpers](general/profiler.md)
     * [ProfilerHelper](general/profiler.md)
     * [ModalHelper](general/modal.md)
     * [JContentHelper](helpers/jcontent.md)

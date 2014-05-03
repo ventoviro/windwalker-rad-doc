@@ -182,5 +182,18 @@ foreach ($dataSet as $data)
 }
 ```
 
+### The Batch Getter & Setter
+
+Get values of `foo` field from all objects.
+
+``` php
+$value = $dataset->foo;
+```
+
+Set value to `bar` field of all object.
+
+``` php
+$dataset->bar = 'Fly';
+```
 
 

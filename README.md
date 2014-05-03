@@ -14,7 +14,7 @@ Hope our framework bring you a joy time :)
 
 ``` bash
 cd /your/joomla/dir
-php composer.phar create-project windwalker/joomla-rad libraries/windwalker dev-staging -s dev
+php composer.phar create-project windwalker/joomla-rad libraries/windwalker 2.* -s dev
 ```
 
 ## Generate a new extension

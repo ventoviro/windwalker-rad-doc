@@ -1,0 +1,37 @@
+{
+
+    "output": "_book",
+    "generator": "site",
+
+    "title": "Windwalker Joomla RAD Framework",
+    "description": "Rapid application development framework for Joomla CMS.",
+
+    "extension": null,
+
+    "github": "https://github.com/ventoviro/windwalker-joomla-rad",
+    "githubHost": "https://github.com/ventoviro/windwalker-joomla-rad",
+
+    "plugins": [],
+
+    "pluginsConfig": {
+        "fontSettings": {
+            "theme": "white",
+            "family": "serif",
+            "size": 3
+        }
+    },
+
+    "links": {
+        "home": "https://github.com/ventoviro/windwalker-joomla-rad",
+
+        "about": "https://github.com/ventoviro/windwalker-joomla-rad",
+        "issues": "https://github.com/ventoviro/windwalker-joomla-rad/issues",
+        "contribute": "https://github.com/ventoviro/windwalker-joomla-rad/issues",
+
+        "sharing": {
+            "google": null,
+            "facebook": null,
+            "twitter": null
+        }
+    }
+}

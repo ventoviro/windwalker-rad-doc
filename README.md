@@ -10,17 +10,11 @@ DataMapper and code generator.
 
 Hope our framework bring you a joy time :)
 
-### Version 1 and 2
-
-This is the version 2 repository, all folder with lower case is legacy code, all folders with capitals is for version 2 and follows PSR-0 naming standard.
-
-The version 2 is still work in process.
-
 ## Installation Via Composer
 
 ``` bash
 cd /your/joomla/dir
-composer create-project windwalker/joomla-rad libraries/windwalker dev-staging -s dev
+php composer.phar create-project windwalker/joomla-rad libraries/windwalker 2.* -s dev
 ```
 
 ## Generate a new extension
@@ -29,9 +23,13 @@ composer create-project windwalker/joomla-rad libraries/windwalker dev-staging -
 php bin/windwalker generator init com_flower sakura.sakuras -c admin
 ```
 
+## Documentation
+
+[Windwalker RAD Document](http://ventoviro.github.io/windwalker-rad-doc/)
+
 ## About
 Author
-:   [Simon Asika](mailto://asika@asikart.com)
+:   [Simon Asika](https://github.com/asika32764)
 
 Joomla!CMS version
 :   3.2 and newer
@@ -46,4 +44,5 @@ First release
 - Remote and Local Image Manager: https://github.com/asikart/remoteimage
 - ACE x Markdown Editor: https://github.com/asikart/ace-markdown-editor
 - Asikart UserXTD: https://github.com/asikart/userxtd
+
 

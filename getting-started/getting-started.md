@@ -6,7 +6,7 @@ We use composer to install Windwalker RAD.
 
 ``` bash
 cd /your/joomla/dir
-composer create-project windwalker/joomla-rad libraries/windwalker dev-staging -s dev
+composer create-project windwalker/joomla-rad libraries/windwalker 2.* -s dev
 ```
 
 ## Setting PHP CLI

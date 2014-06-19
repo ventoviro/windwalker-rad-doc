@@ -1,8 +1,10 @@
-# Asset Helper
+# CSS & JS Management
+
+## AssetHelper
 
 `AssetHelper` is a wrap of `JDocument` helpe us add JS and CSS to html.
 
-## Get AssetHelper
+### Get AssetHelper
 
 ``` php
 $asset = Container::getInstance('com_flower')->get('helper.asset');
@@ -11,7 +13,7 @@ $asset = Container::getInstance('com_flower')->get('helper.asset');
 Every sub container has their own asset helper, we have to choose sub container first.
  `AssetHelper` will auto scan component folders to find css & js files.
 
-## Add CSS
+### Add CSS
 
 ``` php
 $asset->addCss('main.css');
@@ -27,7 +29,7 @@ Asset Helper will scan these folders:
 - (6) `media/com_flower/`
 - (7) `media/windwalker/css/`
 - (8) `media/windwalker/`
-- (9) `libraries/windwalker/Resource/asset/css/` (For legacy)
+- (9) `libraries/windwalker/Resource/asset/css/`
 - (10) `libraries/windwalker/assets/` (For legacy)
 - (11) `libraries/windwalker/assets/` (For legacy)
 
@@ -47,7 +49,7 @@ $asset->internalCss('body {color: #666;}');
 
 This css code will add in `<style>` of `<head>`.
 
-## Add JS
+### Add JS
 
 Same as CSS
 
@@ -77,7 +79,7 @@ $asset->internalJS('console.log('foo')');
 
 This js code will add in `<head>`.
 
-## MD5SUM
+### MD5SUM
 
 We will need add md5 suffix after asset to clean cache:
 
@@ -101,3 +103,53 @@ We can use some tools to generate md5sum in `main.css.sum` file, just one line:
 Now AssetHelper will auto fetch this md5 sum as url suffix.
 
 Note: the suffix will be random in Joomla Debug mode.
+
+## Core Scripts
+
+Windwalker has some JS library in core:
+
+### Underscore
+
+``` php
+\Windwalker\Script\ScriptManager::underscore();
+```
+
+### Backbone
+
+``` php
+\Windwalker\Script\ScriptManager::backbone();
+```
+
+### RequireJS
+
+``` php
+\Windwalker\Script\ScriptManager::requireJS();
+```
+
+## Script Dependency
+
+`ScriptManager` is a dependency manager like `RequireJS`, we can set module and dependency handler and call it everywhere.
+
+This is an example to load Bootstrap Calendar JS.
+
+``` php
+// Define module
+\Windwalker\Script\ScriptManager::setModule(
+    'bootstrapCalendar',
+    function($name, $asset)
+    {
+        // Dependency
+        JHtmlJquery::framework();
+        JHtmlBootstrap::framework();
+
+        $asset->addJS('bootstrap-calendar.js');
+    }
+);
+```
+
+Now use this code to include Bootstrap Calendar every where:
+
+``` php
+\Windwalker\Script\ScriptManager::load('bootstrapCalendar');
+```
+

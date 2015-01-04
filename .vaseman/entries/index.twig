@@ -363,28 +363,32 @@ protected function addToolbar()
                     <pre class="php">
 class FlowerModelSakuras extends ListModel
 {
-	protected $prefix = 'flower';
-	protected $option = 'com_flower';
-	protected $textPrefix = 'COM_FLOWER';
-	protected $name = 'sakuras';
-	protected $viewItem = 'sakura';
-	protected $viewList = 'sakuras';
+    /**
+     * Some default filter fields will be merged to
+     * the auto-generated fields
+     */
+	protected $filterFields = array('sakura.start_date');
 
 	protected function configureTables()
 	{
 		$queryHelper = $this->getContainer()->get('model.sakuras.helper.query', Container::FORCE_NEW);
 
 		$queryHelper->addTable('sakura', '#__flower_sakuras')
-			->addTable('category',  '#__categories', 'sakura.catid      = category.id')
+			->addTable('category',  '#__categories', 'sakura.catid = category.id')
 			->addTable('user',      '#__users',      'sakura.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'sakura.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'sakura.language   = lang.lang_code');
+			->addTable('viewlevel', '#__viewlevels', 'sakura.access = viewlevel.id')
+			->addTable('lang',      '#__languages',  'sakura.language = lang.lang_code');
 
-		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
+        // Auto generate filter fields, you can also write it manually
+		$this->filterFields = array_merge(
+            $this->filterFields,
+            $queryHelper->getFilterFields()
+        );
 	}
 
 	protected function populateState($ordering = 'id', $direction = 'ASC')
 	{
+        // All filter and search will be handled by parent.
 		parent::populateState($ordering, $direction);
 	}
 
@@ -396,6 +400,16 @@ class FlowerModelSakuras extends ListModel
 		}
 
 		return parent::processFilters($query, $filters);
+	}
+
+    protected function configureFilters($filterHelper)
+	{
+		// Override filter behavior here
+	}
+
+	protected function configureSearches($searchHelper)
+	{
+		// Override search behavior here
 	}
 }
                     </pre>

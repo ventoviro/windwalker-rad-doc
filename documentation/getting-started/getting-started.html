@@ -1,0 +1,101 @@
+<h1>Getting Started</h1>
+
+<h2>Installation via Composer</h2>
+
+<p>We use composer to install Windwalker RAD.</p>
+
+<pre><code class="bash">cd /your/joomla/dir
+composer create-project windwalker/joomla-rad libraries/windwalker 2.* -s dev
+</code></pre>
+
+<h2>Setting PHP CLI</h2>
+
+<p>Windwalker generator need PHP CLI, that you can use command line to operate it. If you are in Windows, please make sure
+ the Environment Variable of <code>php.exe</code> has set.</p>
+
+<h2>Generator Commands</h2>
+
+<p>Now, chdir to your Joomla path, type:</p>
+
+<pre><code class="bash">$ php bin/windwalker generator
+</code></pre>
+
+<p>And you will see:</p>
+
+<pre><code>Windwalker Console - version: 2.0
+------------------------------------------------------------
+
+[generator Help]
+
+Extension generator.
+
+Usage:
+  generator &lt;command&gt; [option]
+
+
+Options:
+
+  -c | --client     Site or administrator (admin)
+  -t | --tmpl       Using template.
+  -h | --help       Display this help message.
+  -q | --quiet      Do not output any message.
+  -v | --verbose    Increase the verbosity of messages.
+  --no-ansi         Suppress ANSI colors on unsupported terminals.
+
+Available commands:
+
+  add        Add new controller view model system classes(only component).
+
+    item       Add a singular MVC group for item CRUD.
+
+    list       Add a plural controller to show list page.
+
+    subsystem  Sub system contains item and list two controller to support CRUD a table.
+
+
+  convert    Convert an extension back to a template.
+
+  init       Init a new extension.
+</code></pre>
+
+<h3>Generate Extensions</h3>
+
+<p>Here is some example of how to generate extensions:</p>
+
+<h4>Init Component</h4>
+
+<p>Create a component named <code>com_flower</code> and with two MVCs <code>sakura</code> and <code>sakuras</code> in both site and admin.</p>
+
+<pre><code class="bash">$ php bin/windwalker generator init com_flower sakura.sakuras
+</code></pre>
+
+<p>Create a component in site or admin.</p>
+
+<pre><code class="bash">$ php bin/windwalker generator init com_flower sakura.sakuras -c admin (site)
+</code></pre>
+
+<p>Create a component and use other sub template <code>foo</code>, default is <code>default</code>.</p>
+
+<pre><code class="bash">$ php bin/windwalker generator init com_flower sakura.sakuras -t foo
+</code></pre>
+
+<h4>Add two MVC groups</h4>
+
+<p>Add a singular and a plural MVC group to a exists component.</p>
+
+<pre><code class="bash">$ php bin/windwalker generator add subsystem com_flower rose.roses
+</code></pre>
+
+<h4>Module</h4>
+
+<p>Create a module named <code>mod_flower</code> in front end.</p>
+
+<pre><code class="bash">$ php bin/windwalker generator init mod_flower -c site
+</code></pre>
+
+<h4>Plugin</h4>
+
+<p>Create a module named <code>plg_flower</code> in 'system' group.</p>
+
+<pre><code class="bash">$ php bin/windwalker generator init plg_system_flower
+</code></pre>

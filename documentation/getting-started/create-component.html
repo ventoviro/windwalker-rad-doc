@@ -1,0 +1,149 @@
+<h1>Create Component</h1>
+
+<p>Now we'll use a component named <code>com_flower</code> with <code>sakura</code> and <code>sakuras</code> controllers to tutorial.</p>
+
+<h2>Using Generator</h2>
+
+<p>Please type:</p>
+
+<pre><code class="bash">$ php bin/windwalker init com_flower sakura.sakuras
+</code></pre>
+
+<p>Here is the success message.</p>
+
+<p><img src="http://cl.ly/Uj9X/generate-success.jpg" alt="success" /></p>
+
+<h2>Discover Component</h2>
+
+<p>Go to Joomla admin and discover this component.</p>
+
+<p><img src="http://cl.ly/Ujhc/140331-0003.jpg" alt="img" /></p>
+
+<p>Install it.</p>
+
+<p><img src="http://cl.ly/Uk73/140331-0004.jpg" alt="img" /></p>
+
+<p>Then, click image into component view.</p>
+
+<p><img src="http://cl.ly/UjXp/140331-0006.jpg" alt="img" /></p>
+
+<p>The database has auto created:</p>
+
+<p><img src="http://cl.ly/UkIX/130512-0015.jpg" alt="img" /></p>
+
+<h2>Add Subsystem</h2>
+
+<p>This command can add two controllers, item edit and list:</p>
+
+<pre><code class="bash">$ php bin/windwalker add subsystem com_flower rose.roses
+</code></pre>
+
+<p>We call these two MVC groups an subsystem.</p>
+
+<h2>Folder Structure of Component</h2>
+
+<h3>Admin</h3>
+
+<p><img src="http://cl.ly/UjT3/140331-0009.jpg" alt="img" /></p>
+
+<table>
+<thead>
+<tr>
+  <th>Folder</th>
+  <th>Desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>asset</td>
+  <td>CSS &amp; JS etc.</td>
+</tr>
+<tr>
+  <td>etc</td>
+  <td>Config files</td>
+</tr>
+<tr>
+  <td>controller</td>
+  <td>Controllers</td>
+</tr>
+<tr>
+  <td><strong>helper</strong> / helpers</td>
+  <td>Helper classes. Plural folder is for legacy use.</td>
+</tr>
+<tr>
+  <td>images</td>
+  <td>Images</td>
+</tr>
+<tr>
+  <td>language</td>
+  <td>Languages, site language is in admin together.</td>
+</tr>
+<tr>
+  <td>model</td>
+  <td>Models</td>
+</tr>
+<tr>
+  <td>sql</td>
+  <td>The SQL needed when component install</td>
+</tr>
+<tr>
+  <td>src</td>
+  <td>Some useful classes, using PSR-0 autoloading here.</td>
+</tr>
+<tr>
+  <td>table</td>
+  <td>Tables, Active Record.</td>
+</tr>
+<tr>
+  <td>view</td>
+  <td>Views</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Site</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Folder</th>
+  <th>Desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>asset</td>
+  <td>CSS &amp; JS files</td>
+</tr>
+<tr>
+  <td>controller</td>
+  <td>Controllers</td>
+</tr>
+<tr>
+  <td>helper</td>
+  <td>Helpers. If you want to use some classes both in site and admin, put it in <code>src</code></td>
+</tr>
+<tr>
+  <td>images</td>
+  <td>Images</td>
+</tr>
+<tr>
+  <td>model</td>
+  <td>Models</td>
+</tr>
+<tr>
+  <td>sql</td>
+  <td>The SQL needed when component install</td>
+</tr>
+<tr>
+  <td>view</td>
+  <td>Views</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Include Component Library in Other Extensions</h2>
+
+<p>There is an important file in admin <code>src/init.php</code>.</p>
+
+<p>If you include this file, it will load component required classes and windwalker.</p>

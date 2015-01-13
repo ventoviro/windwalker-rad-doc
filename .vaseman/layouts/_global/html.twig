@@ -35,6 +35,19 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
         <script src="{{ uri.media }}js/highlight.pack.js"></script>
         <script>
+        	// Redirect
+        	if (location.pathname.indexOf('windwalker-rad-doc') == 1)
+        	{
+        		var paths = location.pathname.split('/');
+
+        		paths.shift();
+        		paths.shift();
+
+        		paths = paths.join('/');
+
+        		location.replace('http://' + location.host + '/' + paths);
+        	} 
+
             $(document).ready(function() {
 
                 $('.article-content pre code, #compare pre').each(function(i, block) {

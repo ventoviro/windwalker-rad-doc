@@ -19,7 +19,7 @@ Here is the success message.
 
 > If CLI return ` Could not connect to MySQL.` message, check your mysql account in configuration.php
 
-> The Mac environment may caused by `mysql.sock` reason, see [This solution](https://gist.github.com/asika32764/6760580).
+> The Mac environment may caused by `mysql.sock` issue, see [This solution](https://gist.github.com/asika32764/6760580).
 
 # Discover Component
 

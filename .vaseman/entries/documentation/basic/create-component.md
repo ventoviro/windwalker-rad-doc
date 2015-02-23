@@ -10,12 +10,16 @@ Now we'll use a component named `com_flower` with `sakura` and `sakuras` control
 Please type:
 
 ``` bash
-$ php bin/windwalker init com_flower sakura.sakuras
+$ php bin/windwalker generator init com_flower sakura.sakuras
 ```
 
 Here is the success message.
 
 ![success](http://cl.ly/Uj9X/generate-success.jpg)
+
+> If CLI return ` Could not connect to MySQL.` message, check your mysql account in configuration.php
+
+> The Mac environment may caused by `mysql.sock` reason, see [This solution](https://gist.github.com/asika32764/6760580).
 
 # Discover Component
 

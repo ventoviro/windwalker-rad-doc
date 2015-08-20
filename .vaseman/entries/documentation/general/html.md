@@ -14,7 +14,7 @@ use Windwalker\Html\HtmlElement;
 
 $attrs = array(
     'class' => 'btn btn-mini',
-    'onclick' => 'return fasle;'
+    'onclick' => 'return false;'
 );
 
 $html = (string) new HtmlElement('button', 'Click', $attrs);

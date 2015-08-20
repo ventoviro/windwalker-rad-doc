@@ -11,7 +11,7 @@ Sometimes, we hope to get A items list as selector in B edit interface. In the p
 
 # Basic List Modal
 
-We liook `sakura` first, there is two files in:
+We look `sakura` first, there is two files in:
 
 - `model/field/sakura/list.php`
 - `model/field/sakura/modal.php`

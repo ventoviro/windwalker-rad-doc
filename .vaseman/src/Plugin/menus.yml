@@ -16,6 +16,10 @@ documentation:
     admin/model-admin: ModelAdmin
     admin/formfield: FormField
   General:
+    general/data: Data
+    general/datamapper: DataMapper
+    general/compare: Compare
+    general/middleware: Middleware
     general/asset: Css & JS Management
     general/config: Config
     general/event-listener: Event Listener
@@ -33,8 +37,3 @@ documentation:
     helpers/language: LanguageHelper
     helpers/xml: XmlHelper
     helpers/path: PathHelper
-  'Framework Packages':
-    framework/data: Data
-    framework/datamapper: DataMapper
-    framework/compare: Compare
-    framework/middleware: Middleware

@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
         <link href="../../media/css/main.css" rel="stylesheet">
@@ -136,6 +136,18 @@
        <li class="uk-nav-header">General</li>
 
                     <li class="">
+                <a href="../../documentation/general/data.html">Data</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/compare.html">Compare</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/middleware.html">Middleware</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/general/asset.html">Css &amp; JS Management</a>
             </li>
                     <li class="">
@@ -189,33 +201,57 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-       <li class="uk-nav-header">Framework Packages</li>
-
-                    <li class="">
-                <a href="../../documentation/framework/data.html">Data</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/compare.html">Compare</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/middleware.html">Middleware</a>
-            </li>
-        
-    <li class="uk-nav-divider"></li>
    </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Introduction</h1>
+                    <h1>Html &amp; Dom Builder</h1>
 
-<p>This is a convenience class to create a HTML in OO way.</p>
+<p>This is a convenience class to create XML and HTML element in an OO way.</p>
 
-<h1>HtmlElement</h1>
+<h2>DomElement</h2>
 
-<pre><code class="php">use Windwalker\Html\HtmlElement;
+<p>DomElement and DomElements is use to create XML elements.</p>
+
+<pre><code class="php">use Windwalker\Dom\DomElement;
+
+$attrs = array('id' =&gt; 'foo', 'class' =&gt; 'bar');
+
+echo $dom = (string) new DomElement('field', 'Content', $attrs);
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code class="xml">&lt;field id="foo" class="bar"&gt;Content&lt;/field&gt;
+</code></pre>
+
+<p>Add Children</p>
+
+<pre><code class="php">use Windwalker\Dom\DomElement;
+
+$attrs = array('id' =&gt; 'foo', 'class' =&gt; 'bar');
+
+$content = array(
+    new DomElement('option', 'Yes', array('value' =&gt; 1)),
+    new DomElement('option', 'No', array('value' =&gt; 0))
+);
+
+echo $dom = (string) new DomElement('field', $content, $attrs);
+</code></pre>
+
+<p>The output will be:</p>
+
+<pre><code class="xml">&lt;field id="foo" class="bar"&gt;
+    &lt;option value="1"&gt;Yes&lt;/option&gt;
+    &lt;option value="0"&gt;No&lt;/option&gt;
+&lt;/field&gt;
+</code></pre>
+
+<h2>HtmlElement</h2>
+
+<p>HtmlElement is use to create HTML elements, some specific tags will force to unpaired.</p>
+
+<pre><code class="php">use Windwalker\Dom\HtmlElement;
 
 $attrs = array(
     'class' =&gt; 'btn btn-mini',
@@ -230,12 +266,12 @@ $html = (string) new HtmlElement('button', 'Click', $attrs);
 <pre><code class="html">&lt;button class="btn btn-mini" onclick="return false;"&gt;Click&lt;/button&gt;
 </code></pre>
 
-<h2>Get Attributes by Array Access</h2>
+<h3>Get Attributes by Array Access</h3>
 
 <pre><code class="php">$class = $html['class'];
 </code></pre>
 
-<h1>HtmlElements</h1>
+<h2>DomElements &amp; HtmlElements</h2>
 
 <p>It is a collection of HtmlElement set.</p>
 
@@ -257,6 +293,48 @@ echo $html;
     echo $element;
 }
 </code></pre>
+
+<h2>Attributes</h2>
+
+<pre><code class="php">$html = new HtmlElement('input', array(
+    'data-string' =&gt; 'string',
+    'data-empty' =&gt; '',
+    'data-true'  =&gt; true,
+    'data-false' =&gt; false,
+    'data-null'  =&gt; null,
+
+    // Special attributes
+    'checked'    =&gt; 'checked',
+    'disabled'   =&gt; true,
+    'readonly'   =&gt; false
+));
+
+echo $html;
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="html">&lt;input data-string="string" data-empty="" data-true checked="checked" disabled="disabled"&gt;
+</code></pre>
+
+<h1>Formatter</h1>
+
+<p><code>DomFormatter</code> and <code>HtmlFormatter</code> will help us format <code>XML</code> / <code>HTML</code> string.</p>
+
+<pre><code class="php">$xml = '&lt;field id="foo" class="bar"&gt;&lt;option value="1"&gt;Yes&lt;/option&gt;&lt;option value="0"&gt;No&lt;/option&gt;&lt;/field&gt;';
+
+DomFormatter::format($xml);
+</code></pre>
+
+<p>Result</p>
+
+<pre><code class="xml">&lt;field id="foo" class="bar"&gt;
+    &lt;option value="1"&gt;Yes&lt;/option&gt;
+    &lt;option value="0"&gt;No&lt;/option&gt;
+&lt;/field&gt;
+</code></pre>
+
+<p><code>HtmlFormatter</code> will convert some tags to unpaired element, e.g. <code>&lt;img&gt;</code>.</p>
 
                         <hr />
 

@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
         <link href="../../media/css/main.css" rel="stylesheet">
@@ -136,6 +136,18 @@
        <li class="uk-nav-header">General</li>
 
                     <li class="">
+                <a href="../../documentation/general/data.html">Data</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/compare.html">Compare</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/middleware.html">Middleware</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/general/asset.html">Css &amp; JS Management</a>
             </li>
                     <li class="">
@@ -189,22 +201,6 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-       <li class="uk-nav-header">Framework Packages</li>
-
-                    <li class="">
-                <a href="../../documentation/framework/data.html">Data</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/compare.html">Compare</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/middleware.html">Middleware</a>
-            </li>
-        
-    <li class="uk-nav-divider"></li>
    </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
@@ -212,39 +208,6 @@
                     <h1>Original Bootstrap Modal</h1>
 
 <p>Please see <a href="http://getbootstrap.com/2.3.2/javascript.html#modals">Bootstrap Document</a>.</p>
-
-<h1>Choose A DIV as Modal Box</h1>
-
-<p>Please write this HTML first:</p>
-
-<pre><code class="html">&lt;div id="myModal" class="modal hide fade"&gt;
-    &lt;div class="modal-header"&gt;
-        &lt;button type="button" class="close" data-dismiss="modal" aria-hidden="true"&gt;&amp;times;&lt;/button&gt;
-        &lt;h3&gt;Modal header&lt;/h3&gt;
-    &lt;/div&gt;
-
-    &lt;div class="modal-body"&gt;
-        &lt;p&gt;One fine body…&lt;/p&gt;
-    &lt;/div&gt;
-
-    &lt;div class="modal-footer"&gt;
-        &lt;a href="#" class="btn"&gt;Close&lt;/a&gt;
-        &lt;a href="#" class="btn btn-primary"&gt;Save changes&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p>Then we add this code to PHP:</p>
-
-<pre><code class="php">\Windawlker\Helper\ModalHelper::modal('myModal');
-</code></pre>
-
-<p>Joomla Will generate modal init JS in <code>&lt;head&gt;</code>:</p>
-
-<pre><code class="javascript">$('#myModal').modal(options);
-</code></pre>
-
-<p>It only effect on <code>#myModal</code> div.</p>
 
 <h1>Generate Modal Launch Link</h1>
 
@@ -272,11 +235,6 @@
     'onclick'   =&gt; '',
     'icon'      =&gt; ''
 );
-</code></pre>
-
-<h1>Add Modal Link to Toolbar</h1>
-
-<pre><code class="php">\Windwalker\Helper\ToolbarHelper::modal( 'COM_FLOWER_MODAL_LINK', 'myModal');
 </code></pre>
 
 <h1>Dynamic Modal Content</h1>

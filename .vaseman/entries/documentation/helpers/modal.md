@@ -8,42 +8,6 @@ title:  Modal Tools
 
 Please see [Bootstrap Document](http://getbootstrap.com/2.3.2/javascript.html#modals).
 
-# Choose A DIV as Modal Box
-
-Please write this HTML first:
-
-``` html
-<div id="myModal" class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Modal header</h3>
-    </div>
-
-    <div class="modal-body">
-        <p>One fine body…</p>
-    </div>
-
-    <div class="modal-footer">
-        <a href="#" class="btn">Close</a>
-        <a href="#" class="btn btn-primary">Save changes</a>
-    </div>
-</div>
-```
-
-Then we add this code to PHP:
-
-``` php
-\Windawlker\Helper\ModalHelper::modal('myModal');
-```
-
-Joomla Will generate modal init JS in `<head>`:
-
-``` javascript
-$('#myModal').modal(options);
-```
-
-It only effect on `#myModal` div.
-
 # Generate Modal Launch Link
 
 If we need a link or button to call this modal, using:
@@ -74,12 +38,6 @@ $option = array(
     'onclick'   => '',
     'icon'      => ''
 );
-```
-
-# Add Modal Link to Toolbar
-
-``` php
-\Windwalker\Helper\ToolbarHelper::modal( 'COM_FLOWER_MODAL_LINK', 'myModal');
 ```
 
 # Dynamic Modal Content
@@ -142,4 +100,3 @@ The new result:
     </div>
 </div>
 ```
-

@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
         <link href="../../media/css/main.css" rel="stylesheet">
@@ -136,6 +136,18 @@
        <li class="uk-nav-header">General</li>
 
                     <li class="">
+                <a href="../../documentation/general/data.html">Data</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/compare.html">Compare</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/middleware.html">Middleware</a>
+            </li>
+                    <li class="">
                 <a href="../../documentation/general/asset.html">Css &amp; JS Management</a>
             </li>
                     <li class="">
@@ -186,22 +198,6 @@
             </li>
                     <li class="">
                 <a href="../../documentation/helpers/path.html">PathHelper</a>
-            </li>
-        
-    <li class="uk-nav-divider"></li>
-       <li class="uk-nav-header">Framework Packages</li>
-
-                    <li class="">
-                <a href="../../documentation/framework/data.html">Data</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/compare.html">Compare</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/middleware.html">Middleware</a>
             </li>
         
     <li class="uk-nav-divider"></li>
@@ -267,7 +263,7 @@ class FlowerControllerSakuraEditSave extends SaveController
     protected function postExecute($data = null)
     {
         // Do some stuff like redirect or session.
-        $this-&gt;redirect('...');
+        $this-&gt;setRedirect('...');
 
         return $data;
     }
@@ -280,21 +276,54 @@ class FlowerControllerSakuraEditSave extends SaveController
 
 <h3>Basic Redirect</h3>
 
-<pre><code class="php">$this-&gt;redirect($url, 'Mssage');
+<p>If you call <code>setRedirect(...)</code>, controller will store redirect URL and do redirect after execute completed. 
+Or you can call <code>redirect()</code> to instantly redirect to the URL you stored into controller.</p>
+
+<pre><code class="php">$this-&gt;setRedirect($url, 'Mssage');
+
+return true; // of false
+</code></pre>
+
+<p>If you call <code>redirect($url)</code> with a URL as first argument, Windwalker will instantly redirect to this URL.</p>
+
+<h3>Redirect for success or fail</h3>
+
+<p>In some data handling controller (like <code>SaveController</code>), we can set success and fail redirect URL.</p>
+
+<pre><code class="php">use Windwalker\Bootstrap\Message;
+
+try
+{
+    // Do something
+}
+catch (\Exception $e)
+{
+    $this-&gt;setRedirect($this-&gt;getFailRedirect(), $e-&gt;getMessage(), Message::ERROR_RED);
+}
+
+$this-&gt;setRedirect($this-&gt;getSuccessRedirect(), 'Success', Message::MESSAGE_GREEN);
 </code></pre>
 
 <h3>Redirect to Item or List</h3>
 
-<p>You have to extend <code>AbstractRedirectController</code> to use these features.</p>
+<p>You must extend <code>AbstractRedirectController</code> to use these features.</p>
 
-<pre><code class="php">$this-&gt;redirectToItem($id, 'id', 'Mssage');
+<pre><code class="php">public function getSuccessRedirect()
+{
+    $this-&gt;input-&gt;set('layout', 'edit');
+
+    return \JRoute::_($this-&gt;getRedirectListUrl(), false);
+}
 </code></pre>
 
-<pre><code class="php">$this-&gt;redirectToList('Mssage');
+<pre><code class="php">public function getFailRedirect()
+{
+    return \JRoute::_($this-&gt;getRedirectItemUrl($this-&gt;recordId, $this-&gt;urlVar), false);
+}
 </code></pre>
 
-<p>You can use <code>getRedirectItemUrl()</code>, <code>getRedirectListUrl</code>, <code>getRedirectItemAppend()</code> and <code>getRedirectListAppend()</code>
-to setting some redirect details.</p>
+<p>You can use <code>getRedirectItemUrl()</code>, <code>getRedirectListUrl()</code>, <code>getRedirectItemAppend()</code> and <code>getRedirectListAppend()</code>
+to set some redirect details.</p>
 
 <h2>Setting Config</h2>
 
@@ -354,9 +383,11 @@ echo $block;
 
 <p>In View:</p>
 
-<pre><code class="php">$return = 'http://google.com';
+<pre><code class="php">&lt;?php
+$return = 'http://google.com';
+?&gt;
 
-&lt;a href="index.php?option=com_flower&amp;task=xxx&amp;return=&lt;?php echo UriHelper::base64('encode', $return);?&gt;"&gt;
+&lt;a href="index.php?option=com_flower&amp;task=sakura.edit.save&amp;return=&lt;?php echo base64_encode($return);?&gt;"&gt;
     Link
 &lt;/a&gt;
 </code></pre>

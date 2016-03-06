@@ -15,28 +15,3 @@ $html = \Windwalker\Helper\HtmlHelper::repair($html);
 
 echo $html; // <p>foo</p>
 ```
-
-# Get JS Object
-
-This method convert a nested array or object to JSON format that you can inject it to JS code.
-
-``` php
-$option = array(
-    'url' => 'http://foo.com',
-    'foo' => array('bar', 'yoo')
-);
-
-echo $option = \Windwalker\Helper\HtmlHelper::getJSOBject($option);
-```
-
-Result
-
-```
-{
-    "url" : "http://foo.com",
-    "foo" : ["bar", "yoo"]
-}
-```
-
-
-

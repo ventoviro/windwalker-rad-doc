@@ -16,7 +16,7 @@ $ php bin/windwalker generator init com_flower sakura.sakuras
 
 Here is the success message.
 
-![success](http://cl.ly/Uj9X/generate-success.jpg)
+![p-2016-03-06-006](https://cloud.githubusercontent.com/assets/1639206/13554462/646f10f4-e3e3-11e5-96a0-90f65c38882e.jpg)
 
 > If CLI return ` Could not connect to MySQL.` message, check your mysql account in configuration.php
 
@@ -26,19 +26,19 @@ Here is the success message.
 
 Go to Joomla admin and discover this component.
 
-![img](http://cl.ly/Ujhc/140331-0003.jpg)
+![image](https://cloud.githubusercontent.com/assets/1639206/13554468/76a29386-e3e3-11e5-8a00-ac878e9c6a3c.png)
 
 Install it.
 
-![img](http://cl.ly/Uk73/140331-0004.jpg)
+![image](https://cloud.githubusercontent.com/assets/1639206/13554471/7fcdc0b6-e3e3-11e5-8138-b727ac6f4b6b.png)
 
 Then, click image into component view.
 
-![img](http://cl.ly/UjXp/140331-0006.jpg)
+![image](https://cloud.githubusercontent.com/assets/1639206/13554474/8f953c36-e3e3-11e5-8a28-5f1997014b1a.png)
 
 The database has auto created:
 
-![img](http://cl.ly/UkIX/130512-0015.jpg)
+![image](https://cloud.githubusercontent.com/assets/1639206/13554477/9b41d346-e3e3-11e5-8335-c3c1fb0c59b3.png)
 
 # Add Subsystem
 
@@ -54,7 +54,7 @@ We call these two MVC groups an subsystem.
 
 ## Admin
 
-![img](http://cl.ly/UjT3/140331-0009.jpg)
+![image](https://cloud.githubusercontent.com/assets/1639206/13554478/a9c91b2c-e3e3-11e5-95cd-f0cfd9a65dfd.png)
 
 | Folder | Desc   |
 |--------|--------|

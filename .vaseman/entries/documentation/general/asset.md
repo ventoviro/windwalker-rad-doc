@@ -25,17 +25,15 @@ $asset->addCss('main.css');
 
 Asset Helper will scan these folders:
 
-- (1) `templates/[template]/css/com_flower/`
+- (1) `templates/[template]/css/[com_flower]/`
 - (2) `templates/[template]/css/`
-- (3) `components/com_flower/asset/css/`
-- (4) `components/com_flower/asset/`
-- (5) `media/com_flower/css/`
-- (6) `media/com_flower/`
+- (3) `components/[com_flower]/asset/css/`
+- (4) `components/[com_flower]/asset/`
+- (5) `media/[com_flower]/css/`
+- (6) `media/[com_flower]/`
 - (7) `media/windwalker/css/`
 - (8) `media/windwalker/`
-- (9) `libraries/windwalker/Resource/asset/css/`
-- (10) `libraries/windwalker/assets/` (For legacy)
-- (11) `libraries/windwalker/assets/` (For legacy)
+- (9) `libraries/windwalker/resource/asset/css/`
 
 And add first found `main.css`.
 
@@ -115,45 +113,89 @@ Windwalker has some JS library in core:
 ## Underscore
 
 ``` php
-\Windwalker\Script\ScriptManager::underscore();
+\Windwalker\Script\CoreManager::underscore();
 ```
 
 ## Backbone
 
 ``` php
-\Windwalker\Script\ScriptManager::backbone();
-```
-
-## RequireJS
-
-``` php
-\Windwalker\Script\ScriptManager::requireJS();
+\Windwalker\Script\CoreManager::backbone();
 ```
 
 # Script Dependency
 
-`ScriptManager` is a dependency manager like `RequireJS`, we can set module and dependency handler and call it everywhere.
+`AbstractScriptManager` is a dependency manager, we can create methods as dependency handler and call it anywhere.
 
-This is an example to load Bootstrap Calendar JS.
+This is an example to load a `sakura.js` and init it for different HTML selectors, and dependency to `flower.js`.
 
 ``` php
-// Define module
-\Windwalker\Script\ScriptManager::setModule(
-    'bootstrapCalendar',
-    function($name, $asset)
-    {
-        // Dependency
-        JHtmlJquery::framework();
-        JHtmlBootstrap::framework();
+namespace Flower\Script;
 
-        $asset->addJS('bootstrap-calendar.js');
-    }
-);
+use Windwalker\Script\AbstractScriptManager;
+use Windwalker\Utilities\ArrayHelper;
+
+/**
+ * The FlowerScript class.
+ *
+ * @since  {DEPLOY_VERSION}
+ */
+class FlowerScript extends AbstractScriptManager
+{
+	public static function core()
+	{
+		if (!static::inited(__METHOD__))
+		{
+			// flower.js need jquery.js first
+			\JHtmlJquery::framework();
+
+			// Windwalker will auto check min file exists or not
+			// If min file not exists, normal file will instead, vise versa.
+			static::getAsset()->addJS('flower.min.js');
+			static::getAsset()->addCSS('flower.min.css');
+		}
+	}
+
+	public static function sakura($selector = '.hasSakura', $options = array())
+	{
+		$asset = static::getAsset();
+
+		// Include asset file first.
+		if (!static::inited(__METHOD__))
+		{
+			// We need flower.js first
+			static::core();
+
+			// If not in debug mode, Windwalker will auto get min file instead.
+			$asset->addJS('sakura.js');
+		}
+
+		// Call once if options same
+		if (!static::inited(__METHOD__, func_get_args()))
+		{
+			$defaultOptions = array(
+				'foo' => 'bar',
+				'callback' => '\\function () {}' // Start with \\ will be real JS function
+			);
+
+			// Recursive merge options to defaultOptions.
+			$options = $asset::getJSObject(ArrayHelper::merge($defaultOptions, $options));
+
+			$js = <<<JS
+jQuery(document).ready(function($) {
+    $('$selector').sakuraInit($options);
+});
+JS;
+
+			// Add inline JS in <head>
+			$asset->internalJS($js);
+		}
+	}
+}
 ```
 
 Now use this code to include Bootstrap Calendar every where:
 
 ``` php
-\Windwalker\Script\ScriptManager::load('bootstrapCalendar');
+\Flower\Script\FlowerScript::sakura('.mySakura', array('foo' => 'baz'));
 ```
 

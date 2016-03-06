@@ -9,7 +9,7 @@
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/rainbow.min.css"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/rainbow.min.css"/>
 
         <!-- Custom styles for this template -->
         <link href="../../media/css/main.css" rel="stylesheet">
@@ -135,6 +135,18 @@
     <li class="uk-nav-divider"></li>
        <li class="uk-nav-header">General</li>
 
+                    <li class="">
+                <a href="../../documentation/general/data.html">Data</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/compare.html">Compare</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/middleware.html">Middleware</a>
+            </li>
                     <li class="uk-active">
                 <a href="../../documentation/general/asset.html">Css &amp; JS Management</a>
             </li>
@@ -189,22 +201,6 @@
             </li>
         
     <li class="uk-nav-divider"></li>
-       <li class="uk-nav-header">Framework Packages</li>
-
-                    <li class="">
-                <a href="../../documentation/framework/data.html">Data</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/datamapper.html">DataMapper</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/compare.html">Compare</a>
-            </li>
-                    <li class="">
-                <a href="../../documentation/framework/middleware.html">Middleware</a>
-            </li>
-        
-    <li class="uk-nav-divider"></li>
    </ul>    </div>
 
             <div class="uk-width-medium-3-4 uk-container-center">
@@ -229,17 +225,15 @@
 <p>Asset Helper will scan these folders:</p>
 
 <ul>
-<li>(1) <code>templates/[template]/css/com_flower/</code></li>
+<li>(1) <code>templates/[template]/css/[com_flower]/</code></li>
 <li>(2) <code>templates/[template]/css/</code></li>
-<li>(3) <code>components/com_flower/asset/css/</code></li>
-<li>(4) <code>components/com_flower/asset/</code></li>
-<li>(5) <code>media/com_flower/css/</code></li>
-<li>(6) <code>media/com_flower/</code></li>
+<li>(3) <code>components/[com_flower]/asset/css/</code></li>
+<li>(4) <code>components/[com_flower]/asset/</code></li>
+<li>(5) <code>media/[com_flower]/css/</code></li>
+<li>(6) <code>media/[com_flower]/</code></li>
 <li>(7) <code>media/windwalker/css/</code></li>
 <li>(8) <code>media/windwalker/</code></li>
-<li>(9) <code>libraries/windwalker/Resource/asset/css/</code></li>
-<li>(10) <code>libraries/windwalker/assets/</code> (For legacy)</li>
-<li>(11) <code>libraries/windwalker/assets/</code> (For legacy)</li>
+<li>(9) <code>libraries/windwalker/resource/asset/css/</code></li>
 </ul>
 
 <p>And add first found <code>main.css</code>.</p>
@@ -314,42 +308,87 @@ css/main.css.sum
 
 <h2>Underscore</h2>
 
-<pre><code class="php">\Windwalker\Script\ScriptManager::underscore();
+<pre><code class="php">\Windwalker\Script\CoreManager::underscore();
 </code></pre>
 
 <h2>Backbone</h2>
 
-<pre><code class="php">\Windwalker\Script\ScriptManager::backbone();
-</code></pre>
-
-<h2>RequireJS</h2>
-
-<pre><code class="php">\Windwalker\Script\ScriptManager::requireJS();
+<pre><code class="php">\Windwalker\Script\CoreManager::backbone();
 </code></pre>
 
 <h1>Script Dependency</h1>
 
-<p><code>ScriptManager</code> is a dependency manager like <code>RequireJS</code>, we can set module and dependency handler and call it everywhere.</p>
+<p><code>AbstractScriptManager</code> is a dependency manager, we can create methods as dependency handler and call it anywhere.</p>
 
-<p>This is an example to load Bootstrap Calendar JS.</p>
+<p>This is an example to load a <code>sakura.js</code> and init it for different HTML selectors, and dependency to <code>flower.js</code>.</p>
 
-<pre><code class="php">// Define module
-\Windwalker\Script\ScriptManager::setModule(
-    'bootstrapCalendar',
-    function($name, $asset)
+<pre><code class="php">namespace Flower\Script;
+
+use Windwalker\Script\AbstractScriptManager;
+use Windwalker\Utilities\ArrayHelper;
+
+/**
+ * The FlowerScript class.
+ *
+ * @since  {DEPLOY_VERSION}
+ */
+class FlowerScript extends AbstractScriptManager
+{
+    public static function core()
     {
-        // Dependency
-        JHtmlJquery::framework();
-        JHtmlBootstrap::framework();
+        if (!static::inited(__METHOD__))
+        {
+            // flower.js need jquery.js first
+            \JHtmlJquery::framework();
 
-        $asset-&gt;addJS('bootstrap-calendar.js');
+            // Windwalker will auto check min file exists or not
+            // If min file not exists, normal file will instead, vise versa.
+            static::getAsset()-&gt;addJS('flower.min.js');
+            static::getAsset()-&gt;addCSS('flower.min.css');
+        }
     }
-);
+
+    public static function sakura($selector = '.hasSakura', $options = array())
+    {
+        $asset = static::getAsset();
+
+        // Include asset file first.
+        if (!static::inited(__METHOD__))
+        {
+            // We need flower.js first
+            static::core();
+
+            // If not in debug mode, Windwalker will auto get min file instead.
+            $asset-&gt;addJS('sakura.js');
+        }
+
+        // Call once if options same
+        if (!static::inited(__METHOD__, func_get_args()))
+        {
+            $defaultOptions = array(
+                'foo' =&gt; 'bar',
+                'callback' =&gt; '\\function () {}' // Start with \\ will be real JS function
+            );
+
+            // Recursive merge options to defaultOptions.
+            $options = $asset::getJSObject(ArrayHelper::merge($defaultOptions, $options));
+
+            $js = &lt;&lt;&lt;JS
+jQuery(document).ready(function($) {
+    $('$selector').sakuraInit($options);
+});
+JS;
+
+            // Add inline JS in &lt;head&gt;
+            $asset-&gt;internalJS($js);
+        }
+    }
+}
 </code></pre>
 
 <p>Now use this code to include Bootstrap Calendar every where:</p>
 
-<pre><code class="php">\Windwalker\Script\ScriptManager::load('bootstrapCalendar');
+<pre><code class="php">\Flower\Script\FlowerScript::sakura('.mySakura', array('foo' =&gt; 'baz'));
 </code></pre>
 
                         <hr />

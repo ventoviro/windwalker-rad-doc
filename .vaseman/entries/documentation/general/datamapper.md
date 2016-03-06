@@ -4,34 +4,6 @@ title: DataMapper
 
 ---
 
-# Getting Started
-
-## Prepare Database object
-
-``` php
-use Windwalker\Database\DatabaseFactory;
-
-// Make the database driver.
-$db = DatabaseFactory::getDbo(
-	array(
-		'driver'   => 'mysql',
-		'host'     => 'localhost',
-		'user'     => 'root',
-		'password' => 'xxxx',
-		'database' => 'mydb',
-		'prefix'   => 'prefix_'
-	)
-);
-```
-
-You can get Database later by Factory:
-
-``` php
-$db = DatabaseFactory::getDbo();
-```
-
-See Joomla Database: https://github.com/joomla-framework/database
-
 # Create a DataMapper
 
 ``` php
@@ -40,6 +12,25 @@ use Windwalker\DataMapper\DataMapper;
 $fooMapper = new DataMapper('#__foo');
 
 $fooSet = $fooMapper->find(array('id' => 1));
+```
+
+## Extend It
+
+You can also create a class to operate specific table:
+
+``` php
+class FooMapper extends DataMapper
+{
+    protected $table = '#__foo';
+}
+
+$data = (new FooMapper)->findAll();
+```
+
+Or using facade:
+
+``` php
+$data = \Windwalker\DataMapper\DataMapperFacade::findOne('#__foo', array('id' => 5, 'alias' => 'bar'));
 ```
 
 # Find Records
@@ -209,21 +200,36 @@ $boolean = $fooMapper->delete(array('author' => 'Jean Grey'));
 
 # Join Tables
 
-Using `RelationDataMapper` to join tables.
+Use `RelationDataMapper` to join tables.
 
 ``` php
-$fooMapper = new RelationDataMapper('foo', '#__foo');
+$fooMapper = new RelationDataMapper('flower', '#__flower');
 
-$fooMapper->addTable('author', '#__users', 'foo.user_id = author.id', 'LEFT')
-    ->addTable('category', '#__categories', array('category.lft >= foo.lft', 'category.rgt <= foo.rgt'), 'INNER');
+$fooMapper->addTable('author', '#__users', 'flower.user_id = author.id', 'LEFT')
+    ->addTable('category', '#__categories', array('category.lft >= flower.lft', 'category.rgt <= flower.rgt'), 'INNER');
 
 // Don't forget add alias on where conditions.
-$dataset = $fooMapper->find(array('foo.id' => 5));
+$dataset = $fooMapper->find(array('flower.id' => 5));
 ```
 
 The Join query will be:
 
 ``` sql
+SELECT `flower`.`id`,
+	`flower`.`catid`,
+	`flower`.`title`,
+	`flower`.`user_id`,
+	`flower`.`meaning`,
+	`flower`.`ordering`,
+	`flower`.`state`,
+	`flower`.`params`,
+	`author`.`id` AS `author_id`,
+	`author`.`name` AS `author_name`,
+	`author`.`pass` AS `author_pass`,
+	`category`.`id` AS `category_id`,
+	`category`.`title` AS `category_title`,
+	`category`.`ordering` AS `category_ordering`,
+	`category`.`params` AS `category_params`
 FROM #__foo AS foo
     LEFT JOIN #__users AS author ON foo.user_id = author.id
     INNER JOIN #__categories AS category ON category.lft >= foo.lft AND category.rgt <= foo.rgt
@@ -238,6 +244,12 @@ $fooMapper->addTable(
     'category.lft >= foo.lft OR category.rgt <= foo.rgt',
     'LEFT'
 );
+```
+
+## Group
+
+``` php
+$fooMapper->group('category.id');
 ```
 
 # Compare objects
@@ -264,16 +276,18 @@ WHERE `id` >= '5'
     AND `catid` NOT IN (1,2,3,4,5)
 ```
 
-## Abailable compares:
+## Available compares:
 
-- EqCompare  : Equal `=`
-- NeqCompare : Not Equal `!=`
-- GtCompare  : Greater than `>`
-- GteCompare : Greate than or Equal `>=`
-- LtCompare  : Less than `<`
-- LteCompare : Less than or Equal `<=`
-- InCompare  : In `IN`
-- NinCompare : Not In `NOT IN`
+| Name       | Description      | Operator |
+| ---------- | -----------------| -------- |
+| EqCompare  | Equal                 | `=`  |
+| NeqCompare | Not Equal             | `!=` |
+| GtCompare  | Greater than          | `>`  |
+| GteCompare | Greater than or Equal | `>=` |
+| LtCompare  | Less than             | `<`  |
+| LteCompare | Less than or Equal    | `<=` |
+| InCompare  | In                    | `IN` |
+| NinCompare | Not In                | `IN` |
 
 ## Custom Compare
 
@@ -287,11 +301,8 @@ Will be
 `title` LIKE `%flower%`
 ```
 
-See: https://github.com/ventoviro/windwalker-compare
-
+See: [Compare](./compare.html)
 
 # Using Data and DataSet
 
-See: https://github.com/ventoviro/windwalker-data
-
-
+See: [Data](./data.html)

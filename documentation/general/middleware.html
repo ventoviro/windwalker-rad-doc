@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Uri Helper | Windwalker Joomla RAD</title>
+        <title>Middleware | Windwalker Joomla RAD</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Uri Helper | Windwalker Joomla RAD">
+        <meta property="og:title" content="Middleware | Windwalker Joomla RAD">
         <meta property="og:site_name" content="Windwalker Joomla RAD">
 
         
@@ -91,7 +91,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Uri Helper</h1>
+        <h1>Middleware</h1>
     </div>
         </div>
     </section>
@@ -144,7 +144,7 @@
                     <li class="">
                 <a href="../../documentation/general/compare.html">Compare</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/general/middleware.html">Middleware</a>
             </li>
                     <li class="">
@@ -178,7 +178,7 @@
                     <li class="">
                 <a href="../../documentation/helpers/extension.html">ExtensionHelper</a>
             </li>
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/helpers/uri.html">UriHelper</a>
             </li>
                     <li class="">
@@ -205,43 +205,180 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Base64 Handler</h1>
+                    <h1>Getting Started</h1>
 
-<p>We provides a universal interface for url base64 encode and decode, please using this code to encode url:</p>
+<h2>Basic Example</h2>
 
-<pre><code class="php">echo \Windwalker\Helper\Uri::base64('encode', $url);
+<p>This is a simple way using middleware to wrap your logic.</p>
+
+<pre><code class="php">use Windwalker\Middleware\CallbackMiddleware;
+use Windwalker\Middleware\Middleware;
+
+class TestA extends Middleware
+{
+    /**
+     * call
+     *
+     * @return  mixed
+     */
+    public function call()
+    {
+        echo "&gt;&gt;&gt; AAAA\n";
+
+        $this-&gt;next-&gt;call();
+
+        echo "&lt;&lt;&lt; AAAA\n";
+    }
+}
+
+class TestB extends Middleware
+{
+    /**
+     * call
+     *
+     * @return  mixed
+     */
+    public function call()
+    {
+        echo "&gt;&gt;&gt; BBBB\n";
+
+        $this-&gt;next-&gt;call();
+
+        echo "&lt;&lt;&lt; BBBB\n";
+    }
+}
+
+$a = new TestA;
+
+$a-&gt;setNext(new TestB);
+
+$a-&gt;call();
 </code></pre>
 
-<p>And using this to decode:</p>
+<p>The result should be:</p>
 
-<pre><code class="php">echo \Windwalker\Helper\Uri::base64('decode', $url);
+<pre><code>&gt;&gt;&gt; AAAA
+&gt;&gt;&gt; BBBB
+&lt;&lt;&lt; BBBB
+&lt;&lt;&lt; AAAA
 </code></pre>
 
-<blockquote>
-  <p>The <code>encode</code> action is same as <code>base64_encode()</code> function. But the <code>decode()</code> will make the url safe and replace <code>' '</code> to <code>'+'</code> to avoid decode error.</p>
-</blockquote>
+<h2>Callback Middleware</h2>
 
-<h1>Download and Stream</h1>
+<p>If you don't want to create a class, you want to set a middleware in runtime, using <code>CallbackMiddleware</code></p>
 
-<h2>Direct Download</h2>
+<pre><code class="php">$a = new TestA;
+$b = new TestB;
 
-<p>Another method is <code>download()</code>, we can using redirect download by this code:</p>
+$a-&gt;setNext($b);
+$b-&gt;setNext(new CallbackMiddleware(
+    function($next)
+    {
+        echo "&gt;&gt;&gt;CCCC\n";
+        echo "&lt;&lt;&lt;CCCC\n";
+    }
+));
 
-<pre><code class="php">\Windwalker\Helper\Uri::download('files/file.pdf', true);
+$a-&gt;call();
 </code></pre>
 
-<p>This will redirec to <code>{ROOT}/files/file.pdf</code> and download it.</p>
+<p>The result should be:</p>
 
-<h2>Stream Download</h2>
-
-<p>Using:</p>
-
-<pre><code class="php">\Windwalker\Helper\Uri::download('files/file.pdf', true, true);
+<pre><code>&gt;&gt;&gt; AAAA
+&gt;&gt;&gt; BBBB
+&gt;&gt;&gt; CCCC
+&lt;&lt;&lt; CCCC
+&lt;&lt;&lt; BBBB
+&lt;&lt;&lt; AAAA
 </code></pre>
 
-<p>Will using stream to download a file, it is useful when we want to hide the real file url.</p>
+<p>The <code>CallbackMiddleware</code> support second argument as next in constructor:</p>
 
-<p>Note: Please don't flush or echo any character before stream downlaod, or these character will be included to this file and make file corrupted.</p>
+<pre><code class="php">$ware = new CallbackMiddleware(
+    function($next)
+    {
+        echo "&gt;&gt;&gt;CCCC\n";
+
+        $next-&gt;call();
+
+        echo "&lt;&lt;&lt;CCCC\n";
+    },
+    new NextMiddleware
+)
+</code></pre>
+
+<h1>The Blackhole</h1>
+
+<p>If a middleware call next, we have to make sure there are a next middleware exists, or we will return error.</p>
+
+<pre><code class="php">class TestB extends Middleware
+{
+    /**
+     * call
+     *
+     * @return  mixed
+     */
+    public function call()
+    {
+        echo "&gt;&gt;&gt; BBBB\n";
+
+        $this-&gt;next-&gt;call();
+
+        echo "&lt;&lt;&lt; BBBB\n";
+    }
+}
+
+$b = new TestB;
+
+$b-&gt;call();
+
+// Error, next not exists.
+</code></pre>
+
+<p>But yes we can set a blackhole middleware in the last element, that will do nothing when previous class call it, using <code>EndMiddleware</code>:</p>
+
+<pre><code class="php">$b = new TestB;
+
+$b-&gt;setNext(new EndMiddleware);
+
+$b-&gt;call();
+</code></pre>
+
+<p>The result still like below:</p>
+
+<pre><code>&gt;&gt;&gt; BBBB
+&lt;&lt;&lt; BBBB
+</code></pre>
+
+<h1>Chaining Middleware</h1>
+
+<p>We can using <code>ChainBuilder</code> to chaining multiple middlewares.</p>
+
+<pre><code class="php">use Windwalker\Middleware\Chain\ChainBuilder;
+
+$chain = new ChainBuilder;
+
+$chain
+    -&gt;add('TestA')
+    -&gt;add(new TestB)
+    -&gt;add(function($next)
+    {
+        echo "&gt;&gt;&gt;CCCC\n";
+        echo "&lt;&lt;&lt;CCCC\n";
+    });
+
+$chain-&gt;call();
+</code></pre>
+
+<p>The result still:</p>
+
+<pre><code>&gt;&gt;&gt; AAAA
+&gt;&gt;&gt; BBBB
+&gt;&gt;&gt; CCCC
+&lt;&lt;&lt; CCCC
+&lt;&lt;&lt; BBBB
+&lt;&lt;&lt; AAAA
+</code></pre>
 
                         <hr />
 

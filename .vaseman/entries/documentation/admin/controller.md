@@ -65,7 +65,7 @@ class FlowerControllerSakuraEditSave extends SaveController
     protected function postExecute($data = null)
     {
         // Do some stuff like redirect or session.
-        $this->redirect('...');
+        $this->setRedirect('...');
 
         return $data;
     }
@@ -78,24 +78,58 @@ class FlowerControllerSakuraEditSave extends SaveController
 
 ### Basic Redirect
 
+If you call `setRedirect(...)`, controller will store redirect URL and do redirect after execute completed. 
+Or you can call `redirect()` to instantly redirect to the URL you stored into controller. 
+
 ``` php
-$this->redirect($url, 'Mssage');
+$this->setRedirect($url, 'Mssage');
+
+return true; // of false
+```
+
+If you call `redirect($url)` with a URL as first argument, Windwalker will instantly redirect to this URL.
+
+### Redirect for success or fail
+
+In some data handling controller (like `SaveController`), we can set success and fail redirect URL.
+
+``` php
+use Windwalker\Bootstrap\Message;
+
+try
+{
+    // Do something
+}
+catch (\Exception $e)
+{
+    $this->setRedirect($this->getFailRedirect(), $e->getMessage(), Message::ERROR_RED);
+}
+
+$this->setRedirect($this->getSuccessRedirect(), 'Success', Message::MESSAGE_GREEN);
 ```
 
 ### Redirect to Item or List
 
-You have to extend `AbstractRedirectController` to use these features.
+You must extend `AbstractRedirectController` to use these features.
 
 ``` php
-$this->redirectToItem($id, 'id', 'Mssage');
+public function getSuccessRedirect()
+{
+    $this->input->set('layout', 'edit');
+
+    return \JRoute::_($this->getRedirectListUrl(), false);
+}
 ```
 
 ``` php
-$this->redirectToList('Mssage');
+public function getFailRedirect()
+{
+    return \JRoute::_($this->getRedirectItemUrl($this->recordId, $this->urlVar), false);
+}
 ```
 
-You can use `getRedirectItemUrl()`, `getRedirectListUrl`, `getRedirectItemAppend()` and `getRedirectListAppend()`
-to setting some redirect details.
+You can use `getRedirectItemUrl()`, `getRedirectListUrl()`, `getRedirectItemAppend()` and `getRedirectListAppend()`
+to set some redirect details.
 
 ## Setting Config
 
@@ -160,14 +194,13 @@ We can add a base64 encoded url in url query, the `redirect()` method will quto 
 In View:
 
 ``` php
+<?php
 $return = 'http://google.com';
+?>
 
-<a href="index.php?option=com_flower&task=xxx&return=<?php echo UriHelper::base64('encode', $return);?>">
+<a href="index.php?option=com_flower&task=sakura.edit.save&return=<?php echo base64_encode($return);?>">
     Link
 </a>
 ```
 
 Now, when after controller executed, the `redirect()` method will take us to Google.
-
-
-

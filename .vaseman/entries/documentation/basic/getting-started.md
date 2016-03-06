@@ -29,40 +29,36 @@ $ php bin/windwalker generator
 And you will see:
 
 ```
-Windwalker Console - version: 2.0
+Windwalker Console - version: 2.1
 ------------------------------------------------------------
 
-[generator Help]
+[windwalker Help]
 
-Extension generator.
 
 Usage:
-  generator <command> [option]
+  windwalker <command> [option]
 
 
 Options:
 
-  -c | --client     Site or administrator (admin)
-  -t | --tmpl       Using template.
   -h | --help       Display this help message.
   -q | --quiet      Do not output any message.
   -v | --verbose    Increase the verbosity of messages.
-  --no-ansi         Suppress ANSI colors on unsupported terminals.
+  --ansi            Set 'off' to suppress ANSI colors on unsupported terminals.
 
-Available commands:
+Commands:
 
-  add        Add new controller view model system classes(only component).
+  generator    Extension generator.
+    init         Init a new extension.
+    convert      Convert an extension back to a template.
+    add          Add new controller view model system classes(only component).
+    test         Generate test cases.
 
-    item       Add a singular MVC group for item CRUD.
-
-    list       Add a plural controller to show list page.
-
-    subsystem  Sub system contains item and list two controller to support CRUD a table.
+  build        Some useful tools for building system.
+    gen-command  Generate a command class.
 
 
-  convert    Convert an extension back to a template.
-
-  init       Init a new extension.
+Welcome to Windwalker Console.
 ```
 
 # Generate Extensions

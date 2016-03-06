@@ -20,16 +20,11 @@ Writing table config in `configureTables()`:
 ``` php
 protected function configureTables()
 {
-    $queryHelper = $this->getContainer()->get('model.sakuras.helper.query', Container::FORCE_NEW);
-
     $queryHelper->addTable('sakura', '#__flower_sakuras')
         ->addTable('category',  '#__categories', 'sakura.catid      = category.id')
         ->addTable('user',      '#__users',      'sakura.created_by = user.id')
         ->addTable('viewlevel', '#__viewlevels', 'sakura.access     = viewlevel.id')
         ->addTable('lang',      '#__languages',  'sakura.language   = lang.lang_code');
-
-    // Merge custom filter fields with auto generated filter fields.
-    $this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 }
 ```
 
@@ -42,118 +37,38 @@ We set all table information into `QueryHelper` and this object will help us gen
 
 ```
 `sakura`.`id` AS `id`,
-`sakura`.`id` AS `sakura_id`,
 `sakura`.`asset_id` AS `asset_id`,
-`sakura`.`asset_id` AS `sakura_asset_id`,
 `sakura`.`catid` AS `catid`,
-`sakura`.`catid` AS `sakura_catid`,
 `sakura`.`title` AS `title`,
-`sakura`.`title` AS `sakura_title`,
 `sakura`.`alias` AS `alias`,
-`sakura`.`alias` AS `sakura_alias`,
-`sakura`.`url` AS `url`,
-`sakura`.`url` AS `sakura_url`,
-`sakura`.`introtext` AS `introtext`,
-`sakura`.`introtext` AS `sakura_introtext`,
-`sakura`.`fulltext` AS `fulltext`,
-`sakura`.`fulltext` AS `sakura_fulltext`,
-`sakura`.`images` AS `images`,
-`sakura`.`images` AS `sakura_images`,
-`sakura`.`version` AS `version`,
-`sakura`.`version` AS `sakura_version`,
-`sakura`.`created` AS `created`,
-`sakura`.`created` AS `sakura_created`,
-`sakura`.`created_by` AS `created_by`,
-`sakura`.`created_by` AS `sakura_created_by`,
-`sakura`.`modified` AS `modified`,
-`sakura`.`modified` AS `sakura_modified`,
-`sakura`.`modified_by` AS `modified_by`,
-`sakura`.`modified_by` AS `sakura_modified_by`,
-`sakura`.`ordering` AS `ordering`,
-`sakura`.`ordering` AS `sakura_ordering`,
-`sakura`.`state` AS `state`,
-`sakura`.`state` AS `sakura_state`,
-`sakura`.`publish_up` AS `publish_up`,
-`sakura`.`publish_up` AS `sakura_publish_up`,
-`sakura`.`publish_down` AS `publish_down`,
-`sakura`.`publish_down` AS `sakura_publish_down`,
-`sakura`.`checked_out` AS `checked_out`,
-`sakura`.`checked_out` AS `sakura_checked_out`,
-`sakura`.`checked_out_time` AS `checked_out_time`,
-`sakura`.`checked_out_time` AS `sakura_checked_out_time`,
-`sakura`.`access` AS `access`,
-`sakura`.`access` AS `sakura_access`,
-`sakura`.`language` AS `language`,
-`sakura`.`language` AS `sakura_language`,
-`sakura`.`params` AS `params`,
-`sakura`.`params` AS `sakura_params`,
+
+# ...
+
 `category`.`id` AS `category_id`,
 `category`.`asset_id` AS `category_asset_id`,
-`category`.`parent_id` AS `category_parent_id`,
-`category`.`lft` AS `category_lft`,
-`category`.`rgt` AS `category_rgt`,
-`category`.`level` AS `category_level`,
-`category`.`path` AS `category_path`,
 `category`.`extension` AS `category_extension`,
 `category`.`title` AS `category_title`,
 `category`.`alias` AS `category_alias`,
-`category`.`note` AS `category_note`,
-`category`.`description` AS `category_description`,
-`category`.`published` AS `category_published`,
-`category`.`checked_out` AS `category_checked_out`,
-`category`.`checked_out_time` AS `category_checked_out_time`,
-`category`.`access` AS `category_access`,
-`category`.`params` AS `category_params`,
-`category`.`metadesc` AS `category_metadesc`,
-`category`.`metakey` AS `category_metakey`,
-`category`.`metadata` AS `category_metadata`,
-`category`.`created_user_id` AS `category_created_user_id`,
-`category`.`created_time` AS `category_created_time`,
-`category`.`modified_user_id` AS `category_modified_user_id`,
-`category`.`modified_time` AS `category_modified_time`,
-`category`.`hits` AS `category_hits`,
-`category`.`language` AS `category_language`,
-`category`.`version` AS `category_version`,
+
+# ...
+
 `user`.`id` AS `user_id`,
 `user`.`name` AS `user_name`,
 `user`.`username` AS `user_username`,
 `user`.`email` AS `user_email`,
 `user`.`password` AS `user_password`,
-`user`.`block` AS `user_block`,
-`user`.`sendEmail` AS `user_sendEmail`,
-`user`.`registerDate` AS `user_registerDate`,
-`user`.`lastvisitDate` AS `user_lastvisitDate`,
-`user`.`activation` AS `user_activation`,
-`user`.`params` AS `user_params`,
-`user`.`lastResetTime` AS `user_lastResetTime`,
-`user`.`resetCount` AS `user_resetCount`,
-`user`.`otpKey` AS `user_otpKey`,
-`user`.`otep` AS `user_otep`,
-`viewlevel`.`id` AS `viewlevel_id`,
-`viewlevel`.`title` AS `viewlevel_title`,
-`viewlevel`.`ordering` AS `viewlevel_ordering`,
-`viewlevel`.`rules` AS `viewlevel_rules`,
-`lang`.`lang_id` AS `lang_lang_id`,
-`lang`.`lang_code` AS `lang_lang_code`,
-`lang`.`title` AS `lang_title`,
-`lang`.`title_native` AS `lang_title_native`,
-`lang`.`sef` AS `lang_sef`,
-`lang`.`image` AS `lang_image`,
-`lang`.`description` AS `lang_description`,
-`lang`.`metakey` AS `lang_metakey`,
-`lang`.`metadesc` AS `lang_metadesc`,
-`lang`.`sitename` AS `lang_sitename`,
-`lang`.`published` AS `lang_published`,
-`lang`.`access` AS `lang_access`,
-`lang`.`ordering` AS `lang_ordering`
+
+# etc...
 ```
 
 It looks terrible but useful, if you join multiple tables, the field name will not conflict and more semantic,
-we can use `$item->category_title` or `$item->user_id`, very clear.
+we can get main table field by `$item->title` or `$item->id`, and get joined fields by `$item->category_title` or `$item->user_id`, 
+it is very clear and understandable.
 
 If you want to override select fields, just set it in state:
 
 ``` php
+// Set your own select fields then Windwalker will not auto generate fields.
 $this->state->set('query.select', array('sakura.*', 'category.id AS cid'));
 ```
 
@@ -198,7 +113,7 @@ The `name` is same as what we want to filter in SQL column (eg: `sakura.state`),
 
 Back to admin, you'll see filter select appeared:
 
-![img](http://cl.ly/Uk3p/140331-0012.jpg)
+![image](https://cloud.githubusercontent.com/assets/1639206/13554449/f87b44bc-e3e2-11e5-9093-5fc7d1fabc23.png)
 
 ## Custom Filter Query
 
@@ -231,11 +146,14 @@ protected function configureFilters($filterHelper)
         'sakura.date',
         function($query, $field, $value)
         {
-            $now = new DateTime;
-
-            $now->modify('-1 ' . $value);
-
-            $query->where($field . ' > ' . $now->format('Y-m-d'));
+            if ('' !== (string) $value)
+            {
+                $now = new DateTime;
+                
+                $now->modify('-1 ' . $value);
+    
+                $query->where($field . ' > ' . $now->format('Y-m-d'));
+            }
         }
     );
 }
@@ -292,7 +210,7 @@ The `name="field"` field is for setting our search fields, every option means on
 
 OK, we search english, the language title can be searched:
 
-![img](http://cl.ly/UjEb/140331-0014.jpg)
+![image](https://cloud.githubusercontent.com/assets/1639206/13554438/d01a6228-e3e2-11e5-8f73-8e66407845cb.png)
 
 # Single Field Search
 
@@ -388,3 +306,88 @@ protected function configureSearches($searchHelper)
     );
 }
 ```
+
+# Allow Fields
+
+`$this->allowFields` is a white list to allow limited fields into filter and search. By default, Windwalker will auto generate all fields
+in tables as allow fields. If we send a field named `sakura.foo` but this field not in our table, not thing will happen. 
+This function protect our model from invalid user input, without this list, everyone can set a URL query `&filter[sakura.foo]=1`
+to request then your application will return DB error.
+
+![p-2016-03-06-008](https://cloud.githubusercontent.com/assets/1639206/13554655/8c6e97d2-e3e8-11e5-95f4-53c8783c4633.jpg)
+
+## Custom Allow Fields
+
+Add some custom fields on `allowFields` property, ListModel will merge them into auto generated list.
+ 
+``` php
+class FlowerModelSakuras extends ListModel
+{
+	protected $allowFields = array(
+		'my.custom_field',
+		'other.field'
+	);
+	
+	// ...
+```
+
+## Field Mapping
+
+If some user input are different from table field, we can add alias to mapping them.
+
+``` php
+class FlowerModelSakuras extends ListModel
+{
+    // If user input named created_name, we allow this name first.
+	protected $allowFields = array(
+		'created_date'
+	);
+
+    // Set created_date map to sakura.created field
+	protected $fieldMapping = array(
+	    'created_date' => 'sakura.created'
+	);
+	
+	// ...
+```
+
+## Work with Filter & Search Helper
+
+If we need a special filter with multiple user inputs, we can make allow fields work with filter helper.
+For example, we have two filter named `start_date` and `end_date`, both relative to `sakura.created` field.
+We can use this code to filter a date range between `start_date` and `end_date`.
+  
+``` php
+class FlowerModelSakuras extends ListModel
+{
+	protected $allowFields = array(
+		'start_date',
+		'end_date'
+	);
+	
+	protected function configureFilters($filterHelper)
+    {
+        $filterHelper->setHandler(
+            'start_date',
+            function($query, $field, $value)
+            {
+                if ('' !== (string) $value)
+                {
+                    $query->where('sakura.created >= ' . $query->quote($value));
+                }
+            }
+        );
+        
+        $filterHelper->setHandler(
+            'end_date',
+            function($query, $field, $value)
+            {
+                if ('' !== (string) $value)
+                {
+                    $query->where('sakura.created <= ' . $query->quote($value));
+                }
+            }
+        );
+    }
+```
+

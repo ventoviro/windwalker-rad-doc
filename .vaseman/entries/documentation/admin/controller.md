@@ -37,7 +37,7 @@ Add this task in url to fetch controller what you want:
 index.php?option=com_flower&task=sakuras.state.publish
 ```
 
-This task will get `FlowerControllerSakurasStatePublish` controller in `controller/sakuras/state/publish.php`,
+This task: `sakuras.state.publish` will get `FlowerControllerSakurasStatePublish` controller in `controller/sakuras/state/publish.php`,
 if this controller not exists, Windwalker will use default `Windwalker\Controller\State\PublishController` instead.
 
 # Executed Hooks

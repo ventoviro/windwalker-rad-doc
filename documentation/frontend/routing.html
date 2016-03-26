@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../../media/images/favicon.ico" />
+
+        <title>Frontend | Windwalker Joomla RAD</title>
+
+        <!-- Uikit core CSS -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/rainbow.min.css"/>
+
+        <!-- Custom styles for this template -->
+        <link href="../../media/css/main.css" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="generator" content="The Time Machine">
+
+        <meta property="og:title" content="Frontend | Windwalker Joomla RAD">
+        <meta property="og:site_name" content="Windwalker Joomla RAD">
+
+        
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../../media/js/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/js/uikit.min.js"></script>
+        <script src="../../media/js/highlight.pack.js"></script>
+        <script>
+        	// Redirect
+        	if (location.pathname.indexOf('windwalker-rad-doc') == 1)
+        	{
+        		var paths = location.pathname.split('/');
+
+        		paths.shift();
+        		paths.shift();
+
+        		paths = paths.join('/');
+
+        		location.replace('http://rad.windwalker.io/' + paths);
+        	} 
+
+            $(document).ready(function() {
+
+                $('.article-content pre code, #compare pre').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
+
+            <script src="../../media/js/doc.js"></script>
+    </head>
+    <body class="">
+    <nav id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+
+            <a id="big-logo" class="uk-navbar-brand uk-hidden-small" href="../../">
+                <img class="uk-margin uk-margin-remove" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <a href="#" class="uk-navbar-toggle uk-visible-small" data-uk-toggle="{target:'#mainmenu', cls: 'uk-hidden-small'}"></a>
+
+            <a id="small-logo" class="uk-navbar-brand uk-navbar-center uk-visible-small" href="../../">
+                <img class="uk-margin uk-margin-remove" style="max-width: 95%;" src="../../media/images/logo/windwalker-logo.png" title="Asukademy" alt="Asukademy">
+            </a>
+
+            <ul id="mainmenu" class="uk-navbar-nav uk-float-right uk-hidden-small">
+                <li class="">
+                    <a href="../../about/">
+                        <span class="menu-item-title">About</span>
+                    </a>
+                </li>
+
+                <li class="uk-active">
+                    <a href="../../documentation/basic/getting-started.html">
+                        <span class="menu-item-title">Documentation</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="https://github.com/ventoviro/windwalker-joomla-rad" target="_blank">
+                        <span class="menu-item-title">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section id="banner">
+        <div class="banner-inner">
+                <div class="uk-container uk-container-center banner-inner-title">
+        <h1>Frontend</h1>
+    </div>
+        </div>
+    </section>
+
+    <div id="main-body">
+            <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+                <div class="uk-width-medium-1-4 uk-container-center">
+        <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
+        <li class="uk-nav-header">Basic</li>
+
+                    <li class="">
+                <a href="../../documentation/basic/getting-started.html">Getting Started</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/basic/create-component.html">Create Component</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Admin</li>
+
+                    <li class="">
+                <a href="../../documentation/admin/controller.html">Controller</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/admin/model.html">Model</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/admin/model-list.html">ModelList</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/admin/batch.html">Batch</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/admin/model-admin.html">ModelAdmin</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/admin/formfield.html">FormField</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Frontend</li>
+
+                    <li class="uk-active">
+                <a href="../../documentation/frontend/routing.html">Routing</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">General</li>
+
+                    <li class="">
+                <a href="../../documentation/general/data.html">Data</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/datamapper.html">DataMapper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/compare.html">Compare</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/middleware.html">Middleware</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/asset.html">Css &amp; JS Management</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/config.html">Config</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/event-listener.html">Event Listener</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/html.html">HTML Builder</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/general/thumb.html">Thumb</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+       <li class="uk-nav-header">Helpers</li>
+
+                    <li class="">
+                <a href="../../documentation/helpers/profiler.html">ProfilerHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/modal.html">ModalHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/jcontent.html">JContentHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/extension.html">ExtensionHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/uri.html">UriHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/curl.html">CurlHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/date.html">DateHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/html.html">HtmlHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/language.html">LanguageHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/xml.html">XmlHelper</a>
+            </li>
+                    <li class="">
+                <a href="../../documentation/helpers/path.html">PathHelper</a>
+            </li>
+        
+    <li class="uk-nav-divider"></li>
+   </ul>    </div>
+
+            <div class="uk-width-medium-3-4 uk-container-center">
+                <article class="article-content">
+                    <h1>Introduction</h1>
+
+<p>By default, Joomla use <code>JRoute::_()</code> to handle frontend routing, we must build a URL with queries to create a SEF route.</p>
+
+<p>For example:</p>
+
+<pre><code class="php">echo JRoute::_('index.php?option=com_flower&amp;view=sakura&amp;layout=item&amp;id=25')
+</code></pre>
+
+<p>Will be</p>
+
+<pre><code>/{MENU}/sakura/25.html
+</code></pre>
+
+<p>In Windwalker, we provide a routing tool to help developer build URI by a set of custom rules. You can build a route by resource name:</p>
+
+<pre><code class="php">echo \Windwalker\Router\RadRoute::_('com_flower@sakura', array('id' =&gt; 25, 'alias' =&gt; 'sakura-alias'));
+</code></pre>
+
+<p>The result will be:</p>
+
+<pre><code>/{MENU}/sakura/25/sakura-alias.html
+</code></pre>
+
+<h1>How It Works</h1>
+
+<p>Same as native Joomla routing, you must assign your component and view to core menu items first, now we create a menu with alias: <code>flower</code>.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14058599/bedf14e4-f360-11e5-9620-751d055d11c9.jpg" alt="p-2016-03-26-003" /></p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14058619/2decaa0e-f361-11e5-8d84-c4c3aa0be7c6.jpg" alt="p-2016-03-26-006" /></p>
+
+<p>And create an item with alias: <code>example</code>, ID is <code>7</code>:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14058663/7d7f7f3c-f362-11e5-9257-5591d7b83188.jpg" alt="p-2016-03-26-010" /></p>
+
+<p>Open frontend component file <code>routing.yml</code>.</p>
+
+<pre><code class="yaml">sakuras:
+    pattern: sakuras/(id)
+    view: sakuras
+
+sakura:
+    pattern: sakura/(id)/(alias)
+    view: sakura
+</code></pre>
+
+<p>You can see the <code>sakura</code> item route rule is <code>/sakura/(id)/(alias)</code>, se we type <code>flower/sakura/7/example</code> to browser URL bar.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14058649/37a5be2c-f362-11e5-96c6-47cb1e064d29.jpg" alt="p-2016-03-26-008" /></p>
+
+<p>It is very easy to build route with this item, use <code>_()</code>:</p>
+
+<pre><code class="php">\Windwalker\Router\RadRoute::_('com_flower@sakura', array('id' =&gt; 7, 'alias' =&gt; 'example'));
+</code></pre>
+
+<p>The return value will be:</p>
+
+<pre><code>/{YOUR_SITE_PATH}/flower/sakura/7/example
+</code></pre>
+
+<p>Or use shortcut by component built-in router, which supports ignoring the component option for route name:</p>
+
+<pre><code class="php">// No longer need `com_flower@`
+\Flower\Router\Route::_('sakura', array('id' =&gt; 7, 'alias' =&gt; 'example'));
+</code></pre>
+
+<p>But you can still build other components' routes by add option prefix:</p>
+
+<pre><code class="php">// Build com_animal's route
+\Flower\Router\Route::_('com_animal@bear', array('id' =&gt; 25, 'alias' =&gt; 'bear-alias'));
+</code></pre>
+
+<h2>Use Other Route Styles</h2>
+
+<h3><code>/(id)-(alias)</code> Style</h3>
+
+<p>You can use <code>(id)-(alias)</code> style to make your URI. Follow this rules:</p>
+
+<pre><code class="yaml"># ...
+
+sakura:
+    pattern: sakura/(id)-(alias)
+    view: sakura
+    requirements:
+        id: \d+
+</code></pre>
+
+<p>The <code>requirements.id: \d+</code> use regex to limit id value must be an integer, so all string after <code>id</code> will be <code>alias</code>.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14058708/6a34523e-f364-11e5-8edf-56ac1c69da66.jpg" alt="p-2016-03-26-012" /></p>
+
+<p>You can get variables in controller:</p>
+
+<pre><code class="php">$id    = $this-&gt;input-&gt;get('id');
+$alias = $this-&gt;input-&gt;get('alias');
+</code></pre>
+
+<h3>Mutiple Level Routes</h3>
+
+<p>You can also add categories path for <code>sakuras</code> list page, for example:</p>
+
+<pre><code class="yaml">sakura_category:
+    pattern: /category/(*path)
+    view: sakuras
+</code></pre>
+
+<pre><code class="php">Route::_('sakura_category', array('path' =&gt; $category-&gt;path));
+</code></pre>
+
+<p>Will be:</p>
+
+<pre><code>/{YOUR_SITE_PATH}/flower/category/first/second/third
+</code></pre>
+
+<p>In controller, you can get path as an array:</p>
+
+<pre><code class="php">$this-&gt;input-&gt;getVar('path');
+
+/*
+Array
+(
+    [0] =&gt; first
+    [1] =&gt; second
+    [2] =&gt; third
+)
+*/
+</code></pre>
+
+<h1>Patterns</h1>
+
+<h2>Simple Params</h2>
+
+<p>Use parenthesis <code>()</code> to wrap param name.</p>
+
+<pre><code class="http">    pattern: /flower/(id)/(alias)
+</code></pre>
+
+<p>For uri look like : <code>/flower/25/article-alias-name</code>, above pattern will be matched and there will be two input params.</p>
+
+<pre><code class="html">[id] =&gt; 25
+[alias] =&gt; article-alias-name
+</code></pre>
+
+<h3>Custom Input Variables</h3>
+
+<pre><code class="http">    pattern: /flower/(id)/(alias)
+    variables:
+        foo: bar
+</code></pre>
+
+<p>The attributes in <code>variables</code> will auto set to input if this route be matched.</p>
+
+<h3>Limit By Requirement</h3>
+
+<p>Use Regular Expression to validate type of input. For example <code>\d+</code> indicates that only <code>Integer</code> will be accepted as <code>id</code> input.</p>
+
+<pre><code class="http">    pattern: /flower/(id)/(alias)
+    requirements:
+        id: \d+
+</code></pre>
+
+<h2>Optional Params</h2>
+
+<h3>Single Optional Params</h3>
+
+<p>Use <code>(/{anyparam})</code> to wrap an Optional Param.</p>
+
+<pre><code class="http">    pattern: flower(/id)
+</code></pre>
+
+<p>Below 2 uris will be matched simultaneously.</p>
+
+<pre><code>/flower
+/flower/25
+</code></pre>
+
+<h3>Multiple Optional Params</h3>
+
+<pre><code class="http">    pattern: flower(/year,month,day)
+</code></pre>
+
+<p>All uris below will be matched.</p>
+
+<pre><code>/flower
+/flower/2014
+/flower/2014/10
+/flower/2014/10/12
+</code></pre>
+
+<p>Matched variables:</p>
+
+<pre><code>Array
+(
+    [year] =&gt; 2014
+    [month] =&gt; 10
+    [day] =&gt; 12
+)
+</code></pre>
+
+<h2>Wildcards</h2>
+
+<p>Use Wildcards to match all the successive params in uri.</p>
+
+<pre><code class="http">    pattern: /king/(*tags)
+</code></pre>
+
+<p>Every param after <code>/king</code> will all be matched. For example: <code>/king/john/troilus/and/cressida</code>, will get these variables.</p>
+
+<pre><code>Array
+(
+    [tags] =&gt; Array
+    (
+        [0] =&gt; john
+        [1] =&gt; troilus
+        [2] =&gt; and
+        [3] =&gt; cressida
+    )
+)
+</code></pre>
+
+<h1>Route Options</h1>
+
+<p>Windwalker router provides a set of options to make your rules flexible.</p>
+
+<h2><code>view</code></h2>
+
+<pre><code class="yaml">sakura:
+    pattern: sakura/(id)
+    view: sakura
+</code></pre>
+
+<p>The <code>view: sakura</code> means to find <code>FlowerViewSakuraHtml</code>, it is as same as <code>&amp;view=sakura</code> in HTTP query.</p>
+
+<h2><code>task</code></h2>
+
+<pre><code class="yaml">sakura:
+    pattern: sakura/save(/id)
+    task: sakura.edit.save
+</code></pre>
+
+<p>The <code>task: sakura.edit.save</code> means to find <code>FlowerControllerSakuraEditSave</code>, it is same as <code>&amp;task=sakura.edit.save</code> in HTTP query.</p>
+
+<blockquote>
+  <p>You can only contain ont of <code>task</code> or <code>view</code> in route setting.</p>
+</blockquote>
+
+<h2><code>layout</code></h2>
+
+<pre><code class="yaml">sakura:
+    pattern: sakura/(id)
+    view: sakura
+    layout: edit
+</code></pre>
+
+<p>The <code>layout: edit</code> means to use <code>tmpl/edit.php</code> in sakura view, it is as same as <code>&amp;layout=edit</code> in HTTP query.</p>
+
+<h2><code>format</code></h2>
+
+<pre><code class="yaml">sakura:
+    pattern: sakura/(id)
+    view: sakura
+    format: json
+</code></pre>
+
+<p>The <code>format: json</code> means to find <code>FlowerViewSakuraJson</code>, it is as same as <code>&amp;format=json</code> in HTTP query.</p>
+
+<h2>HTTP Scheme</h2>
+
+<p>Only this HTTP setting will be matched.</p>
+
+<pre><code class="yaml">sakura:
+    pattern: sakura/(id)
+    view: sakura
+
+    # Only https
+    scheme: https
+    post: 80
+    sslPort: 443
+</code></pre>
+
+<h2>Extra</h2>
+
+<p>Extra is some your custom values for this route.</p>
+
+<pre><code class="yaml">sakura:
+    pattern: sakura/(id)
+    view: sakura
+    extra:
+        foo:
+            bar: yoo
+</code></pre>
+
+<p>Use this way to get extra values from matched route.</p>
+
+<pre><code class="php">\Windwalker\Router\RadRouter::getInstance('com_flower')-&gt;extra-&gt;get('foo.bar'); //yoo
+</code></pre>
+
+<h2><code>buildHandler</code> And <code>parseHandler</code></h2>
+
+<pre><code class="yaml">sakura:
+    pattern: sakura/(id)
+    view: sakura
+    buildHandler: MyRouteHelper::buildSakura
+    parseHandler: MyRouteHelper::parseSakura
+</code></pre>
+
+<p>The <code>*Handler</code> options means to add hook to build or parse action for this route.</p>
+
+<h3>The <code>buildHandler</code></h3>
+
+<pre><code class="php">class MyRouteHelper
+{
+    /**
+     * Sakura build hook.
+     *
+     * @param array      $queries  The HTTP query get from RadRoute class.
+     * @param boolean    $replace  Replace core build rules and only use the return value of this method.
+     * @param JMenuSite  $menu     The Joomla menu object to get menu items.
+     *
+     * @return  string|void  Replace segments or not.
+     */
+    public static function buildSakura(&amp;$queries, &amp;$replace, $menu)
+    {
+        // Add custom query data
+        $queries['my_data'] = 'foo';
+    }
+}
+</code></pre>
+
+<p>Now if you build a route by <code>$route::_('sakura', ['id' =&gt; 25]);</code>, the generated URI will be:</p>
+
+<pre><code>/{YOUR_SITE}/flower/sakura/25?my_data=foo
+</code></pre>
+
+<h4>Use Menu Item Alias</h4>
+
+<p>You can replace your route by custom rules, for example, if a menu direct to an item, return menu alias to replace sakura route:</p>
+
+<pre><code class="php">public static function buildSakura(&amp;$queries, &amp;$replace, $menu)
+{
+    // Get all com_flower menus
+    $menuItems = $menu-&gt;getItems('component', 'com_flower');
+
+    // Find matched menu item.
+    foreach ($menuItems as $menuItem)
+    {
+        if (isset($menuItem-&gt;query['view']) &amp;&amp; $menuItem-&gt;query['view'] == 'sakura' &amp;&amp; 
+            isset($menuItem-&gt;query['id']) &amp;&amp; $menuItem-&gt;query['id'] == $queries['id'])
+        {
+            // Replace core route rule.
+            $replace = true;
+
+            // Return Menu alias as segments 
+            return $menuItem-&gt;alias;
+        }
+    }
+
+    // No menu matched, follows default rule.
+}
+</code></pre>
+
+<h3>The <code>parseHandler</code></h3>
+
+<pre><code class="php">class MyRouteHelper
+{    
+    /**
+     * Sakura parse hook.
+     *
+     * @param   array  $variables  The variables parse from URI.
+     *
+     * @return  array  The final variables with your custom data.
+     */
+    public static function parseSakura(array $variables)
+    {
+        if (isset($variables['task']) &amp;&amp; $variables['task'] == 'sakura.edit.apply')
+        {
+            $variables['my_data'] = 'bar';
+        }
+
+        return $variables;
+    }
+}
+</code></pre>
+
+<p>ParseHandler is much simpler, just add or delete what you need of variables, and return it. Then you can get data by Input.</p>
+
+<pre><code class="php">$this-&gt;input-&gt;get('my_data'); //bar
+</code></pre>
+
+                        <hr />
+
+    <p class="uk-text-center">
+        Found a typo? Help us <a target="_blank" href="https://github.com/ventoviro/windwalker-rad-doc/tree/master/.vaseman/entries">improve</a> this document.
+    </p>
+    <blockquote class="uk-text-center">
+        This document is for Windwalker Joomla RAD, if you are finding Windwalker PHP framework, please see: <a target="_blank" href="http://windwalker.io">Windwalker Framework</a>
+    </blockquote>
+                </article>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer id="footer">
+        <div class="uk-container uk-container-center uk-text-center">
+
+            <div class="footer-logo">
+                <a href="#" data-uk-smooth-scroll>
+                    <img src="../../media/images/logo/windwalker-logo.png" width="150" alt="Footer LOGO">
+                </a>
+            </div>
+
+            <p class="uk-text-center social-buttons">
+                <a target="_blank" class="uk-icon-button uk-icon-facebook" href="javascript: void(0);"></a>
+
+                <a target="_blank" class="uk-icon-button uk-icon-github" href="https://github.com/ventoviro/windwalker-joomla-rad"></a>
+
+                <a class="uk-icon-button uk-icon-envelope-o" href="mailto:asika32764@gmail.com"></a>
+            </p>
+
+            <p>
+                Copyright &copy; 2016 Windwalker. All Rights Reserved.
+            </p>
+            <p class="back">
+                <a href="#" data-uk-smooth-scroll><span class="uk-icon-chevron-up"></span> Back to Top</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-48372917-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    </body>
+</html>

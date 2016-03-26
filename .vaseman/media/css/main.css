@@ -389,6 +389,14 @@ dl dd {
 .article-content a.h1-link:hover {
   color: #ccc;
 }
+.article-content h1 > code,
+.article-content h2 > code,
+.article-content h3 > code,
+.article-content h4 > code,
+.article-content h5 > code,
+.article-content h6 > code {
+  font-size: inherit;
+}
 .table-of-content ul {
   margin-left: 25px;
 }

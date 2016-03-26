@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../../media/images/favicon.ico" />
 
-        <title>Getting Started | Windwalker Joomla RAD</title>
+        <title>Simple ORM | Windwalker Joomla RAD</title>
 
         <!-- Uikit core CSS -->
         <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.15.0/css/uikit.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
         <meta name="description" content="">
         <meta name="generator" content="The Time Machine">
 
-        <meta property="og:title" content="Getting Started | Windwalker Joomla RAD">
+        <meta property="og:title" content="Simple ORM | Windwalker Joomla RAD">
         <meta property="og:site_name" content="Windwalker Joomla RAD">
 
         
@@ -91,7 +91,7 @@
     <section id="banner">
         <div class="banner-inner">
                 <div class="uk-container uk-container-center banner-inner-title">
-        <h1>Getting Started</h1>
+        <h1>Simple ORM</h1>
     </div>
         </div>
     </section>
@@ -103,7 +103,7 @@
         <ul class="uk-nav uk-nav-side side-menu side-bar" data-uk-nav="">
         <li class="uk-nav-header">Basic</li>
 
-                    <li class="uk-active">
+                    <li class="">
                 <a href="../../documentation/basic/getting-started.html">Getting Started</a>
             </li>
                     <li class="">
@@ -148,7 +148,7 @@
                     <li class="">
                 <a href="../../documentation/general/datamapper.html">DataMapper</a>
             </li>
-                    <li class="">
+                    <li class="uk-active">
                 <a href="../../documentation/general/orm.html">Simple ORM</a>
             </li>
                     <li class="">
@@ -215,101 +215,269 @@
 
             <div class="uk-width-medium-3-4 uk-container-center">
                 <article class="article-content">
-                    <h1>Installation via Composer</h1>
+                    <h1>Introduction</h1>
 
-<p>We use composer to install Windwalker RAD.</p>
+<p>Windwalker Simple ORM is a tool to configure relations between different tables, it helps <code>JTable</code> and <code>DataMapper</code> 
+ables to operate other relative tables and data.</p>
 
-<pre><code class="bash">cd /your/joomla/dir
-composer create-project windwalker/joomla-rad libraries/windwalker 2.*
+<h1>One to Many</h1>
+
+<p>If we have a table <code>brands</code> relation to <code>cars</code> and <code>bikes</code>, the <code>cars</code> and <code>bikes</code> both contains a column <code>brand_id</code>, 
+this is <code>one-to-many</code> relation.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14060861/ee5ebb70-f3ab-11e5-8f02-fcab25ff3dff.png" alt="diagram" /></p>
+
+<p>We can configure this relation in Windwalker <code>Table</code> class:</p>
+
+<pre><code class="php">&lt;?php
+
+use Windwalker\Relation\Action;
+use Windwalker\Table\Table;
+
+class VehicleTableBrand extends Table
+{
+    public function __construct()
+    {
+        parent::__construct('#__flower_brands');
+    }
+
+    protected function configure()
+    {
+        // Configure One to Many Relations
+        $this-&gt;_relation-&gt;addOneToMany('cars') // Property to store relation data
+
+            // Use another JTable to handle CRUD, and the foreign key mapping.
+            -&gt;targetTable(new VehicleTableCar, array('id' =&gt; 'brand_id'))
+            -&gt;onUpdate(Action::CASCADE) // On update
+            -&gt;onDelete(Action::CASCADE); // On delete
+
+        $this-&gt;_relation-&gt;addOneToMany('roses')
+            -&gt;targetTable(new VehicleTableBike, array('id' =&gt; 'brand_id'))
+            -&gt;onUpdate(Action::CASCADE)
+            -&gt;onDelete(Action::CASCADE);
+    }
+}
 </code></pre>
 
-<h1>Setting PHP CLI</h1>
+<p>You can just send the table name to <code>targetTable()</code>, the <code>Table</code> object will be auto created.</p>
 
-<p>Windwalker generator need PHP CLI, that you can use command line to operate it. If you are in Windows, please make sure
- the Environment Variable of <code>php.exe</code> has set.</p>
-
-<h1>Generator Commands</h1>
-
-<p>Now, chdir to your Joomla path, type:</p>
-
-<pre><code class="bash">$ php bin/windwalker generator
+<pre><code class="php">-&gt;targetTable('#__vehicle_cars', array('id' =&gt; 'brand_id'))
 </code></pre>
 
-<p>And you will see:</p>
+<h2>CRUD</h2>
 
-<pre><code>Windwalker Console - version: 2.1
-------------------------------------------------------------
+<p>When <code>VehicleTableBrand::load()</code>, all relative <code>cars</code> and <code>bikes</code> will also loaded.</p>
 
-[windwalker Help]
+<pre><code class="php">$brandTable = JTable::getInstance('Brand', 'VehicleTable');
 
+$brandTable-&gt;load(3);
 
-Usage:
-  windwalker &lt;command&gt; [option]
-
-
-Options:
-
-  -h | --help       Display this help message.
-  -q | --quiet      Do not output any message.
-  -v | --verbose    Increase the verbosity of messages.
-  --ansi            Set 'off' to suppress ANSI colors on unsupported terminals.
-
-Commands:
-
-  generator    Extension generator.
-    init         Init a new extension.
-    convert      Convert an extension back to a template.
-    add          Add new controller view model system classes(only component).
-    test         Generate test cases.
-
-  build        Some useful tools for building system.
-    gen-command  Generate a command class.
-
-
-Welcome to Windwalker Console.
+// \Windwalker\Data\DataSet
+foreach ($brandTable-&gt;cars as $car)
+{
+    // \Windwalker\Data\Data
+    echo $car-&gt;title;
+}
 </code></pre>
 
-<h1>Generate Extensions</h1>
+<p>If we call <code>VehicleTableBrand::store()</code>, all data in <code>cars</code> and <code>bikes</code> will also batch store back to database. 
+The store action was handled by <code>VehicleTableCar</code> and <code>VehicleTableBike</code> objects which we set when the relation configuring.</p>
 
-<p>Here is some example of how to generate extensions:</p>
+<pre><code class="php">$brandTable-&gt;store(); // All cars and bikes data will be updated.
 
-<h2>Init Component</h2>
+$brandTable-&gt;cars[] = new Data(array('title' =&gt; 'A new car'));
 
-<p>Create a component named <code>com_flower</code> and with two MVCs <code>sakura</code> and <code>sakuras</code> in both site and admin.</p>
-
-<pre><code class="bash">$ php bin/windwalker generator init com_flower sakura.sakuras
+$brandTable-&gt;store(); // The latest inserted data will be created. 
 </code></pre>
 
-<p>Create a component in site or admin.</p>
+<p>If we call <code>VehicleTableBrand::delete()</code>, all relative data will auto be deleted too.</p>
 
-<pre><code class="bash">$ php bin/windwalker generator init com_flower sakura.sakuras -c admin (site)
+<pre><code class="php">$brandTable-&gt;load(3);
+$brandTable-&gt;delete(); // All cars and bikes relative to this brand item will be delete.
 </code></pre>
 
-<p>Create a component and use other sub template <code>foo</code>, default is <code>default</code>.</p>
+<h1>Action</h1>
 
-<pre><code class="bash">$ php bin/windwalker generator init com_flower sakura.sakuras -t foo
+<p>The relation handling above is <code>CASCADE</code>, which means sync all data with update and delete action.
+We can set <code>onUpdate</code> and <code>onDelete</code> to other actions.</p>
+
+<pre><code class="php">// In VehicleTableBrand class
+
+use Windwalker\Relation\Action;
+
+// ...
+
+$this-&gt;_relation-&gt;addOneToMany('cars')
+    -&gt;targetTable(new VehicleTableCar, array('id', 'brand_id'))
+    -&gt;onUpdate(Action::SET_NULL)
+    -&gt;onDelete(Action::SET_NULL);
 </code></pre>
 
-<h2>Add two MVC groups</h2>
+<table>
+<thead>
+<tr>
+  <th>Action</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>Action::CASCADE</code></td>
+  <td>When main record update or change the key value, all relative records' foreign keys will also change. If main record be deleted, all relative records will also be deleted too.</td>
+</tr>
+<tr>
+  <td><code>Action::NO_ACTION</code> or <code>Action::RESTRICT</code></td>
+  <td>If main record update, delete or change key value, all relative record will have no any actions.</td>
+</tr>
+<tr>
+  <td><code>Action::SET_NULL</code></td>
+  <td>If main record update, delete or change key value, all relative records' foreign key will be st to <code>NULL</code></td>
+</tr>
+</tbody>
+</table>
 
-<p>Add a singular and a plural MVC group to a exists component.</p>
+<p>See:</p>
 
-<pre><code class="bash">$ php bin/windwalker generator add subsystem com_flower rose.roses
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Foreign_key">https://en.wikipedia.org/wiki/Foreign_key</a></li>
+<li><a href="http://stackoverflow.com/a/6720458">http://stackoverflow.com/a/6720458</a></li>
+</ul>
+
+<h1>One to One</h1>
+
+<p>If a table <code>members</code> and <code>member_profiles</code> is one-to-one relation, and the <code>member_profiles.member_id</code> matching the <code>members.id</code>.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14061115/ddd32f0a-f3b2-11e5-94f8-b4de40c2ffb2.png" alt="diagram" /></p>
+
+<pre><code class="php">$this-&gt;_relation-&gt;addOneToOne('profile')
+    -&gt;targetTable(new Table('#__member_profiles'), array('id' =&gt; 'member_id'));
 </code></pre>
 
-<h2>Module</h2>
+<p>In this case, the loaded relative item will be a <code>Data</code> object not <code>DataSet</code>.</p>
 
-<p>Create a module named <code>mod_flower</code> in front end.</p>
-
-<pre><code class="bash">$ php bin/windwalker generator init mod_flower -c site
+<pre><code class="php">$memberTable-&gt;load(5);
+$memberTable-&gt;profile; // \Windwalker\Data\Data
 </code></pre>
 
-<h2>Plugin</h2>
+<h1>Many to One</h1>
 
-<p>Create a module named <code>plg_flower</code> in 'system' group.</p>
+<p>We can set <code>cars</code> belongs to <code>brands</code>, this case is very similar to <code>articles</code> and <code>category</code>, both are many-to-one relation.
+ The key mapping must in turn.</p>
 
-<pre><code class="bash">$ php bin/windwalker generator init plg_system_flower
+<pre><code class="php">// in VehicleTableCar class
+
+$this-&gt;_relation-&gt;addManyToOne('brand')
+    -&gt;targetTable(new FlowerTableBrand, array('brand_id' =&gt; 'id'));
 </code></pre>
+
+<p>Now if we load a car record, we will get the matched brand item.</p>
+
+<pre><code class="php">$carTable-&gt;load(4);
+$carTable-&gt;brand; // \Windwalker\Data\Data
+</code></pre>
+
+<blockquote>
+  <p>Many to One relation only support <code>read</code> now, <code>delete</code> and <code>store</code> not works.</p>
+</blockquote>
+
+<h1>Many to Many</h1>
+
+<p>Many to many relation need a middleware table to support multiple mapping. If we have a <code>members</code> and <code>groups</code> is many-to-many relation,
+then we must have a <code>member_group_maps</code> table to handle this relation.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/1639206/14061202/75fd770c-f3b5-11e5-83ef-194589526fdd.png" alt="mtm" /></p>
+
+<pre><code class="php">// In member table object 
+
+$this-&gt;_relation-&gt;addManyToMany('groups')
+    // We usually not create a JTable for mapping table, so just use table name at first argument.
+    -&gt;mappingTable('#__member_group_maps', array('id' =&gt; 'member_id'))
+    -&gt;targetTable(new FlowerTableGroup, array('group_id' =&gt; 'id'));
+</code></pre>
+
+<h1>Flush</h1>
+
+<p>If our relation update is to delete all and re-create all, we can set it is <code>flush</code>.</p>
+
+<pre><code class="php">$this-&gt;_relation-&gt;addOneToMany('cars')
+    -&gt;targetTable(new VehicleTableCar, array('id', 'brand_id'))
+    -&gt;onUpdate(Action::SET_NULL)
+    -&gt;onDelete(Action::SET_NULL)
+    -&gt;flush(true); // Add this
+</code></pre>
+
+<p>Now if we call <code>store()</code>, all relation data will be deleted and re-insert all data.</p>
+
+<h1>Relationship for DataMapper</h1>
+
+<p>If you hope the <code>DataMapper</code> can also handle relationship, you must extends to <code>AbstractObservableDataMapper</code>.</p>
+
+<blockquote>
+  <p>NOTE: In DataMapper, the relationship handler still use <code>Table</code> object.</p>
+</blockquote>
+
+<pre><code class="php">use Windwalker\DataMapper\Adapter\DatabaseAdapterInterface;
+use Windwalker\Table\Table;
+
+class VehicleMapperBrand extends \Windwalker\DataMapper\ObservableDataMapper
+{
+    public function __construct(DatabaseAdapterInterface $db = null)
+    {
+        parent::__construct('#__vehicle_brands', 'id', $db);
+    }
+
+    protected function initialise()
+    {
+        // Configure One to Many Relations
+        $this-&gt;_relation-&gt;addOneToMany('cars')
+            -&gt;targetTable(new VehicleTableCar, array('id' =&gt; 'brand_id'))
+            -&gt;onUpdate(Action::CASCADE)
+            -&gt;onDelete(Action::CASCADE);
+    }
+}
+
+$mapper = new VehicleMapperBrand;
+
+$brands = $mapper-&gt;find(array('state' =&gt; 1));
+
+foreach ($brands as $brand)
+{
+    foreach ($brand-&gt;cars as $car)
+    {
+        $car-&gt;title;
+    }
+}
+</code></pre>
+
+<h1>Global Configuring</h1>
+
+<p>Sometimes we will hope we can only configure once and work on both <code>Table</code> and <code>DataMapper</code>, or maybe we need configure 
+relationship in different conditions, we can use <code>RelationContainer</code> to make global configuring. When <code>Table</code> and <code>DataMapper</code>
+created, they will auto register these configurations.</p>
+
+<pre><code class="php">// Set it in component class.
+
+final class FlowerComponent extends \Flower\Component\FlowerComponent
+{
+    public function prepare()
+    {
+        parent::prepare();
+
+        // Get RelationContainer and a Relation object
+        $relation = $this-&gt;container-&gt;get('relation.container')-&gt;getRelation('#__flower_sakuras');
+
+        $relation-&gt;addManyToOne('foo')
+            -&gt;targetTable(new FlowerTableFoo, array('foo_id' =&gt; 'id'));
+
+        $relation-&gt;addManyToOne('category')
+            -&gt;targetTable(JTable::getInstance('Category'), array('catid' =&gt; 'id'));
+    }
+}
+</code></pre>
+
+<p>The <code>$relation</code> get from <code>RelationContainer</code> is a singleton <code>Relation</code> object for <code>#__flower_sakuras</code> table. 
+All configurations we set to this table will be keep in <code>RelationContainer</code> and latter if we create <code>Table</code> or <code>DataMapper</code>,
+the relation configuration will auto register to these two objects.</p>
 
                         <hr />
 

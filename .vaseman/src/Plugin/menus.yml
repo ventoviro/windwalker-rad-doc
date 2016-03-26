@@ -20,6 +20,7 @@ documentation:
   General:
     general/data: Data
     general/datamapper: DataMapper
+    general/orm: Simple ORM
     general/compare: Compare
     general/middleware: Middleware
     general/asset: Css & JS Management

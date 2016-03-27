@@ -20,7 +20,7 @@ Writing table config in `configureTables()`:
 ``` php
 protected function configureTables()
 {
-    $queryHelper->addTable('sakura', '#__flower_sakuras')
+    $this->addTable('sakura', '#__flower_sakuras')
         ->addTable('category',  '#__categories', 'sakura.catid      = category.id')
         ->addTable('user',      '#__users',      'sakura.created_by = user.id')
         ->addTable('viewlevel', '#__viewlevels', 'sakura.access     = viewlevel.id')

@@ -230,7 +230,7 @@ done by model.</p>
 
 <pre><code class="php">protected function configureTables()
 {
-    $queryHelper-&gt;addTable('sakura', '#__flower_sakuras')
+    $this-&gt;addTable('sakura', '#__flower_sakuras')
         -&gt;addTable('category',  '#__categories', 'sakura.catid      = category.id')
         -&gt;addTable('user',      '#__users',      'sakura.created_by = user.id')
         -&gt;addTable('viewlevel', '#__viewlevels', 'sakura.access     = viewlevel.id')

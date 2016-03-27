@@ -296,7 +296,7 @@ $brandTable-&gt;store(); // The latest inserted data will be created.
 $brandTable-&gt;delete(); // All cars and bikes relative to this brand item will be delete.
 </code></pre>
 
-<h1>Action</h1>
+<h1>Actions</h1>
 
 <p>The relation handling above is <code>CASCADE</code>, which means sync all data with update and delete action.
 We can set <code>onUpdate</code> and <code>onDelete</code> to other actions.</p>
@@ -475,7 +475,7 @@ final class FlowerComponent extends \Flower\Component\FlowerComponent
 }
 </code></pre>
 
-<p>The <code>$relation</code> get from <code>RelationContainer</code> is a singleton <code>Relation</code> object for <code>#__flower_sakuras</code> table. 
+<p>The <code>$relation</code> which get from <code>RelationContainer</code> is a singleton <code>Relation</code> object for <code>#__flower_sakuras</code> table. 
 All configurations we set to this table will be keep in <code>RelationContainer</code> and latter if we create <code>Table</code> or <code>DataMapper</code>,
 the relation configuration will auto register to these two objects.</p>
 

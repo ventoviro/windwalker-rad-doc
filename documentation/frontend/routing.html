@@ -532,15 +532,21 @@ Array
      * Sakura build hook.
      *
      * @param array      $queries  The HTTP query get from RadRoute class.
-     * @param boolean    $replace  Replace core build rules and only use the return value of this method.
+     * @param boolean    $replace  Replace core build rules and only use the return segments from this method.
      * @param JMenuSite  $menu     The Joomla menu object to get menu items.
      *
-     * @return  string|void  Replace segments or not.
+     * @return  string|array|void  Replace, append segments or not, return value can be string or array.
+     *                             Only works when $replace = true.
      */
     public static function buildSakura(&amp;$queries, &amp;$replace, $menu)
     {
         // Add custom query data
         $queries['my_data'] = 'foo';
+
+        // Or return custom segments
+        $replace = true;
+
+        return 'my/custom/segments';
     }
 }
 </code></pre>
@@ -550,11 +556,30 @@ Array
 <pre><code>/{YOUR_SITE}/flower/sakura/25?my_data=foo
 </code></pre>
 
+<p>Or return custom segments by setting <code>$replace</code> to <code>true</code>.</p>
+
+<pre><code class="php">public static function buildSakura(&amp;$queries, &amp;$replace, $menu)
+{
+    $replace = true;
+
+    unset($queries['id']);
+    unset($queries['alias']);
+    unset($queries['option']);
+
+    return 'my/custom/segments';
+}
+</code></pre>
+
+<p>Result:</p>
+
+<pre><code>/{YOUR_SITE}/flower/my/custom/segments
+</code></pre>
+
 <h4>Use Menu Item Alias</h4>
 
 <p>You can replace your route by custom rules, for example, if a menu direct to an item, return menu alias to replace sakura route:</p>
 
-<pre><code class="php">public static function buildSakura(&amp;$queries, &amp;$replace, $menu)
+<pre><code class="php">public static function buildSakura(&amp;$queries, &amp;$replace, JMenuSite $menu)
 {
     // Get all com_flower menus
     $menuItems = $menu-&gt;getItems('component', 'com_flower');
@@ -562,14 +587,14 @@ Array
     // Find matched menu item.
     foreach ($menuItems as $menuItem)
     {
-        if (isset($menuItem-&gt;query['view']) &amp;&amp; $menuItem-&gt;query['view'] == 'sakura' &amp;&amp; 
+        if (isset($menuItem-&gt;query['view']) &amp;&amp; $menuItem-&gt;query['view'] == 'sakura' &amp;&amp;
             isset($menuItem-&gt;query['id']) &amp;&amp; $menuItem-&gt;query['id'] == $queries['id'])
         {
             // Replace core route rule.
             $replace = true;
 
-            // Return Menu alias as segments 
-            return $menuItem-&gt;alias;
+            // Only return menu Itemid then Joomla will convert to menu alias
+            $queries = array('Itemid' =&gt; $menuItem-&gt;id);
         }
     }
 

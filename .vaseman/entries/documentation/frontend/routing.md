@@ -354,15 +354,21 @@ class MyRouteHelper
      * Sakura build hook.
      *
      * @param array      $queries  The HTTP query get from RadRoute class.
-     * @param boolean    $replace  Replace core build rules and only use the return value of this method.
+     * @param boolean    $replace  Replace core build rules and only use the return segments from this method.
      * @param JMenuSite  $menu     The Joomla menu object to get menu items.
      *
-     * @return  string|void  Replace segments or not.
+     * @return  string|array|void  Replace, append segments or not, return value can be string or array.
+     *                             Only works when $replace = true.
      */
     public static function buildSakura(&$queries, &$replace, $menu)
     {
         // Add custom query data
         $queries['my_data'] = 'foo';
+        
+        // Or return custom segments
+        $replace = true;
+        
+        return 'my/custom/segments';
     }
 }
 ```
@@ -373,12 +379,33 @@ Now if you build a route by `$route::_('sakura', ['id' => 25]);`, the generated 
 /{YOUR_SITE}/flower/sakura/25?my_data=foo
 ```
 
+Or return custom segments by setting `$replace` to `true`.
+
+``` php
+public static function buildSakura(&$queries, &$replace, $menu)
+{
+    $replace = true;
+    
+    unset($queries['id']);
+    unset($queries['alias']);
+    unset($queries['option']);
+    
+    return 'my/custom/segments';
+}
+```
+
+Result:
+
+```
+/{YOUR_SITE}/flower/my/custom/segments
+```
+
 #### Use Menu Item Alias
 
 You can replace your route by custom rules, for example, if a menu direct to an item, return menu alias to replace sakura route:
 
 ``` php
-public static function buildSakura(&$queries, &$replace, $menu)
+public static function buildSakura(&$queries, &$replace, JMenuSite $menu)
 {
     // Get all com_flower menus
     $menuItems = $menu->getItems('component', 'com_flower');
@@ -386,17 +413,17 @@ public static function buildSakura(&$queries, &$replace, $menu)
     // Find matched menu item.
     foreach ($menuItems as $menuItem)
     {
-        if (isset($menuItem->query['view']) && $menuItem->query['view'] == 'sakura' && 
+        if (isset($menuItem->query['view']) && $menuItem->query['view'] == 'sakura' &&
             isset($menuItem->query['id']) && $menuItem->query['id'] == $queries['id'])
         {
             // Replace core route rule.
             $replace = true;
-            
-            // Return Menu alias as segments 
-            return $menuItem->alias;
+
+            // Only return menu Itemid then Joomla will convert to menu alias
+            $queries = array('Itemid' => $menuItem->id);
         }
     }
-    
+
     // No menu matched, follows default rule.
 }
 ```
